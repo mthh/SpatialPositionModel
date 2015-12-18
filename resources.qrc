@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/SpatialPositionModel" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>

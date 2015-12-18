@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TabWidget</class>
+ <widget class="QTabWidget" name="TabWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>757</width>
+    <height>536</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>R SpatialPosition though QGIS</string>
+  </property>
+  <property name="currentIndex">
+   <number>0</number>
+  </property>
+  <widget class="QWidget" name="stewarts">
+   <attribute name="title">
+    <string>Stewarts Potentials</string>
+   </attribute>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>711</width>
+      <height>438</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="5" column="0">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="7" column="0">
+      <widget class="QPushButton" name="StewartpushButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Display the result</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Stewart potentials&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <spacer name="verticalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="6" column="0">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_30">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Location of unknown points (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_beta">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>100.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Span (&lt;span style=&quot; font-style:italic;&quot;&gt;meters&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Field name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_span">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>250000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_resolution">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>150000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Mask layer (optionnal)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="StewartComboBox_pts">
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QgsFieldComboBox" name="StewartComboBox_field">
+         <property name="filters">
+          <set>QgsFieldProxyModel::Numeric</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Resolution (&lt;span style=&quot; font-style:italic;&quot;&gt;meters&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Point layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QComboBox" name="StewartcomboBox_function">
+         <item>
+          <property name="text">
+           <string>Exponential</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pareto</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_24">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Spatial interaction function&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="StewartComboBox_mask">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PolygonLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="StewartComboBox_unknwPts">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <spacer name="verticalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="13" column="0">
+        <widget class="QLabel" name="label_29">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Distance matrix (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="StewartComboBox_matdist">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::NoGeometry|QgsMapLayerProxyModel::PluginLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="1">
+        <widget class="QPushButton" name="StewartpushButton_clear">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>23</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>23</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Clear the fields</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1" colspan="2">
+        <widget class="QgsFieldExpressionWidget" name="mFieldExpressionWidget">
+         <property name="filters">
+          <set>QgsFieldProxyModel::Numeric</set>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="label_37">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Custom expression (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QSpinBox" name="StewartspinBox_class">
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <number>25</number>
+         </property>
+         <property name="value">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="label_25">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Number of class&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QDialogButtonBox" name="buttonBox_close1">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>460</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="standardButtons">
+     <set>QDialogButtonBox::Close</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="reilly">
+   <attribute name="title">
+    <string>Reilly catchment areas</string>
+   </attribute>
+   <widget class="QWidget" name="layoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>711</width>
+      <height>431</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="2" column="0">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_34">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Distance matrix (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Resolution (&lt;span style=&quot; font-style:italic;&quot;&gt;meters&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QgsFieldComboBox" name="ReillyComboBox_field">
+         <property name="filters">
+          <set>QgsFieldProxyModel::Numeric</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_pts">
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_mask">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::LineLayer|QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PolygonLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Span (&lt;span style=&quot; font-style:italic;&quot;&gt;meters&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Field name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QDoubleSpinBox" name="ReillydoubleSpinBox_span">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>250000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QDoubleSpinBox" name="ReillydoubleSpinBox_beta">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>100.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QDoubleSpinBox" name="ReillydoubleSpinBox_resolution">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>150000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Mask layer (optionnal)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Point layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Spatial interaction function&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QComboBox" name="ReillycomboBox_function">
+         <item>
+          <property name="text">
+           <string>Exponential</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pareto</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="9" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_unknwPts">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_matdist">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::NoGeometry|QgsMapLayerProxyModel::PluginLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_31">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Location of unknown points (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <spacer name="verticalSpacer_10">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="11" column="1">
+        <widget class="QPushButton" name="ReillypushButton_clear">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>23</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>23</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Clear the fields</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="7" column="0">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Reilly catchment areas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <spacer name="verticalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="8" column="0">
+      <widget class="QPushButton" name="ReillypushButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Display the result</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QDialogButtonBox" name="buttonBox_close2">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>460</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="standardButtons">
+     <set>QDialogButtonBox::Close</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="huff">
+   <attribute name="title">
+    <string>Huff probabilistic catchment areas</string>
+   </attribute>
+   <widget class="QWidget" name="layoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>711</width>
+      <height>431</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="2" column="0">
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="9" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="HuffComboBox_matdist">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::NoGeometry|QgsMapLayerProxyModel::PluginLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QDoubleSpinBox" name="HuffdoubleSpinBox_span">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>250000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QDoubleSpinBox" name="HuffdoubleSpinBox_beta">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="maximum">
+          <double>100.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QDoubleSpinBox" name="HuffdoubleSpinBox_resolution">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>150000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Resolution (&lt;span style=&quot; font-style:italic;&quot;&gt;meters&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QgsFieldComboBox" name="HuffComboBox_field">
+         <property name="filters">
+          <set>QgsFieldProxyModel::Numeric</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="HuffComboBox_mask">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::LineLayer|QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PolygonLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_20">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Mask layer (optionnal)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Span (&lt;span style=&quot; font-style:italic;&quot;&gt;meters&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Point layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="HuffComboBox_pts">
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Field name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QComboBox" name="HuffcomboBox_function">
+         <item>
+          <property name="text">
+           <string>Exponential</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pareto</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_22">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Spatial interaction function&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1" colspan="2">
+        <widget class="QgsMapLayerComboBox" name="HuffComboBox_unknwPts">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+         <property name="filters">
+          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_33">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Location of unknown points (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_35">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Distance matrix (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <spacer name="verticalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="10" column="1">
+        <widget class="QPushButton" name="HuffpushButton_clear">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>23</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>23</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Clear the fields</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Huff probabilistic catchment areas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="0">
+      <spacer name="verticalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="6" column="0">
+      <widget class="QPushButton" name="HuffpushButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Display the result</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QDialogButtonBox" name="buttonBox_close3">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>460</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="standardButtons">
+     <set>QDialogButtonBox::Close</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="tab">
+   <attribute name="title">
+    <string>About and References</string>
+   </attribute>
+   <widget class="QLabel" name="label_32">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>160</y>
+      <width>691</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Usage&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>190</y>
+      <width>711</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;modeling-spatial-interactions&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;odeling spatial interactions&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;Modeling spatial interactions is used to understand and quantify the level of interaction between different locations. It implies carrying out the three following steps:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;- &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;Conceptual formalization &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;of entities (e.g. individuals, spatial units) and relationships (e.g. work, power, goods).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;- Corresponent &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;mathematical formalization&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;: Tij=SiDj/d2ij the trade flow between units i and j (Tij) is proportional to the supply of unit i (Si) and the demand of unit j (Dj) and inversely proportional to the squared distance between both units (d2ij).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;- &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;Informatic formalization&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; of the model: language, algorithms, etc.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;The most ancient and common spatial interactions model is of the gravity form (like below). It has roots in the late 19st century (Casey, Ravenstein) and has been used in several fields (geography, economy, demography) to model a high variety of flows (commuting, trade, migrations). A brief presentation can be found in the Geography of transport systems. For a detailed one see, among many others, the book of Fotheringham and O’Kelly, &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-style:italic; color:#000000;&quot;&gt;Spatial Interaction Models: Formulations and Applications&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; (Kluwer Academic Publishers, 1989). In French you can found pedagogic materials on the website of Pr. Grasland&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;place-based-models-stewart-reilly-huff&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;lace-based models: Stewart, Reilly, Huff&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;There are two main ways of modeling spatial interactions: the first one focuses on links between places (flows), the second one focuses on places and their influence at a distance. Following the physics metaphor, the flow may be seen as the &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;gravitational force&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; between two masses, the place influence as the &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;gravitational potential&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;. The &lt;/span&gt;&lt;span style=&quot; font-family:'Consolas,Monaco,Courier New,monospace'; font-size:8pt; color:#333333; background-color:#f7f7f7;&quot;&gt;SpatialPosition&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; package, as its name suggests, proposes an implementation of place-based models: Stewart, Reilly and Huff models.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;The Stewart model [1] is also known in the literature, depending on the discipline, as &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;potential access&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;gravitational potential&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; or &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;gravitational accessibility&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;. The concept was developped in the 1940s by physicist John Q. Stewart from an analogy to the gravity model. In his seminal work on the catchment areas of American universities, Stewart computes &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;potentials of population&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;. This potential is defined as a stock of population weighted by distance:&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;MathJax-Element-6-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;A&lt;/span&gt;&lt;a name=&quot;MathJax-Span-57&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;a name=&quot;MathJax-Span-58&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;=&lt;/span&gt;&lt;a name=&quot;MathJax-Span-59&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Size2'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;∑&lt;/span&gt;&lt;a name=&quot;MathJax-Span-61&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;a name=&quot;MathJax-Span-64&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;=&lt;/span&gt;&lt;a name=&quot;MathJax-Span-65&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;1&lt;/span&gt;&lt;a name=&quot;MathJax-Span-66&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;n&lt;/span&gt;&lt;a name=&quot;MathJax-Span-67&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;O&lt;/span&gt;&lt;a name=&quot;MathJax-Span-69&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;a name=&quot;MathJax-Span-70&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;f&lt;/span&gt;&lt;a name=&quot;MathJax-Span-71&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;(&lt;/span&gt;&lt;a name=&quot;MathJax-Span-72&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;d&lt;/span&gt;&lt;a name=&quot;MathJax-Span-74&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;a name=&quot;MathJax-Span-77&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;a name=&quot;MathJax-Span-78&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;The terms of this equation can be interpreted in a potential approach or an accessibility approach (in brackets):&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;MathJax-Element-7-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;A&lt;/span&gt;&lt;a name=&quot;MathJax-Span-83&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; is the potential at &lt;/span&gt;&lt;a name=&quot;MathJax-Element-8-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; (the accessibility)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;MathJax-Element-9-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;O&lt;/span&gt;&lt;a name=&quot;MathJax-Span-91&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; is the stock of population at &lt;/span&gt;&lt;a name=&quot;MathJax-Element-10-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; (the number of opportunities)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;MathJax-Element-11-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;f&lt;/span&gt;&lt;a name=&quot;MathJax-Span-98&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:8pt; color:#000000;&quot;&gt;(&lt;/span&gt;&lt;a name=&quot;MathJax-Span-99&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;d&lt;/span&gt;&lt;a name=&quot;MathJax-Span-101&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;a name=&quot;MathJax-Span-104&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;a name=&quot;MathJax-Span-105&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:8pt; color:#000000;&quot;&gt;)&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; is a negative function of the distance between &lt;/span&gt;&lt;a name=&quot;MathJax-Element-12-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; and &lt;/span&gt;&lt;a name=&quot;MathJax-Element-13-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;, mainly of the power or the exponential form.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;The computation of potentials could be considered as a &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;spatial interpolation method&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; such as inverse distance weighted interpolation (IDW) or kernel density estimator. These models aim to estimate unknown values of non-observed points from known values given by measure points. Cartographically speaking, they are often used to get a continuous surface from a set of discrete points. However, we argue that the Stewart model is mainly a spatial interaction modeling approach, with a possible secondary use for spatial interpolation.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;The Reilly [2] and the Huff [3] models draw catchment areas. They have been widely used to study the location of economic activities and are part of the geomarketing toolbox. These models aim to quantify the attraction force on a location &lt;/span&gt;&lt;a name=&quot;MathJax-Element-14-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; generated by an opportunity &lt;/span&gt;&lt;a name=&quot;MathJax-Element-15-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;:&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;MathJax-Element-16-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;A&lt;/span&gt;&lt;a name=&quot;MathJax-Span-122&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;a name=&quot;MathJax-Span-125&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;a name=&quot;MathJax-Span-126&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;=&lt;/span&gt;&lt;a name=&quot;MathJax-Span-127&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;O&lt;/span&gt;&lt;a name=&quot;MathJax-Span-129&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;a name=&quot;MathJax-Span-130&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;f&lt;/span&gt;&lt;a name=&quot;MathJax-Span-131&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;(&lt;/span&gt;&lt;a name=&quot;MathJax-Span-132&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;d&lt;/span&gt;&lt;a name=&quot;MathJax-Span-134&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;a name=&quot;MathJax-Span-137&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;a name=&quot;MathJax-Span-138&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Main'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;The attraction force between &lt;/span&gt;&lt;a name=&quot;MathJax-Element-17-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; and &lt;/span&gt;&lt;a name=&quot;MathJax-Element-18-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; (&lt;/span&gt;&lt;a name=&quot;MathJax-Element-19-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;A&lt;/span&gt;&lt;a name=&quot;MathJax-Span-149&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;a name=&quot;MathJax-Span-152&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;) is proportional to the mass of &lt;/span&gt;&lt;a name=&quot;MathJax-Element-20-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; (&lt;/span&gt;&lt;a name=&quot;MathJax-Element-21-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;O&lt;/span&gt;&lt;a name=&quot;MathJax-Span-160&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;) and inversely proportional to the distance between both locations (&lt;/span&gt;&lt;a name=&quot;MathJax-Element-22-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;d&lt;/span&gt;&lt;a name=&quot;MathJax-Span-165&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;a name=&quot;MathJax-Span-168&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;). Let &lt;/span&gt;&lt;a name=&quot;MathJax-Element-23-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; be the location of a consumer and &lt;/span&gt;&lt;a name=&quot;MathJax-Element-24-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; the locations of a set of shopping malls. We compute all the attraction forces sustained by &lt;/span&gt;&lt;a name=&quot;MathJax-Element-25-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; and we assign &lt;/span&gt;&lt;a name=&quot;MathJax-Element-26-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; to the mall with the strongest attraction force. Computed on a regular fine grid of points &lt;/span&gt;&lt;a name=&quot;MathJax-Element-27-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; the model produces a set of deterministic catchment areas.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;The Huff model is a relative version of the Reilly model: for a given point &lt;/span&gt;&lt;a name=&quot;MathJax-Element-28-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; and a given attraction center &lt;/span&gt;&lt;a name=&quot;MathJax-Element-29-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;, the attraction force of &lt;/span&gt;&lt;a name=&quot;MathJax-Element-30-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; is divided by the sum of all the possible attraction centers that affect &lt;/span&gt;&lt;a name=&quot;MathJax-Element-31-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;. The result my be understood as the probability to choose &lt;/span&gt;&lt;a name=&quot;MathJax-Element-32-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;j&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; among the set of possible destinations. Computed on a regular fine grid of points &lt;/span&gt;&lt;a name=&quot;MathJax-Element-33-Frame&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MathJax_Math-italic'; font-size:8pt; color:#000000;&quot;&gt;i&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; the model produces a raster representing probable catchment areas.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;the-distance-friction&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;T&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;he distance friction&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;Modeling spatial interactions means quantifying the distance friction or impedance. The role of the distance can be interpreted as a disincentive to access desired destinations or opportunities (e.g. jobs, shops). At the very place of the opportunity, the interaction function equals 1, meaning that the potential access is 100%. Far away from the opportunity, the interaction function tends to 0, meaning that the potential access is 0 %. The &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;span&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt; is defined as the value where the interaction function falls to 0.5 (50%). From the individuals’ point of vue, this function may be seen as a degree of availability of a given opportunity. From the opportunity’s point of vue (a store for example), the interaction function may be seen as a decreasing catchment area: there is a maximal attraction close to the opportunity and this attraction decreases progressively through distance.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;[1] STEWART J.Q. (1942) “Measure of the influence of a population at a distance”, &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-style:italic; color:#000000; background-color:#ffffff;&quot;&gt;Sociometry&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;, 5(1): 63-71.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;[2] REILLY W.J. (1931) &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-style:italic; color:#000000; background-color:#ffffff;&quot;&gt;The law of retail gravitation&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;, W. J. Reilly, New York.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;[3] HUFF D. (1964) “Defining and Estimating a Trading Area”, &lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; font-style:italic; color:#000000; background-color:#ffffff;&quot;&gt;Journal of Marketing&lt;/span&gt;&lt;span style=&quot; font-family:'Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif'; font-size:8pt; color:#000000; background-color:#ffffff;&quot;&gt;, 28: 34-38.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_36">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>691</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;About&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_26">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>691</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Partial python port of &amp;quot;&lt;span style=&quot; font-weight:600;&quot;&gt;SpatialPosition&lt;/span&gt;&amp;quot; &lt;span style=&quot; font-weight:600;&quot;&gt;R package&lt;/span&gt; (with the gracious consent of the authors!).&lt;br/&gt;-&amp;gt; Documentation and source code is available on the &lt;a href=&quot;https://cran.r-project.org/package=SpatialPosition&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;CRAN&lt;/span&gt;&lt;/a&gt; or on &lt;a href=&quot;https://github.com/Groupe-ElementR/SpatialPosition&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;.&lt;br/&gt;-&amp;gt; R vignettes explaining the main concepts and showing usecase are also available:&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/SpatialPosition/vignettes/SpatialPosition.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Introduction to the SpatialPosition package&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/SpatialPosition/vignettes/StewartExample.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Stewart Potentials : a Use Case&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+  <customwidgets>
+  <customwidget>
+   <class>QgsFieldComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+  <customwidget>
+   <class>QgsFieldExpressionWidget</class>
+   <extends>QWidget</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+  <customwidget>
+   <class>QgsFieldProxyModel</class>
+   <extends>QComboBox</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+  <customwidget>
+   <class>QgsMapLayerProxyModel</class>
+   <extends>QComboBox</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+  <customwidget>
+   <class>QgsMapLayerComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>StewartComboBox_pts</tabstop>
+  <tabstop>StewartComboBox_field</tabstop>
+  <tabstop>StewartComboBox_mask</tabstop>
+  <tabstop>StewartcomboBox_function</tabstop>
+  <tabstop>StewartdoubleSpinBox_resolution</tabstop>
+  <tabstop>StewartdoubleSpinBox_span</tabstop>
+  <tabstop>StewartdoubleSpinBox_beta</tabstop>
+  <tabstop>StewartspinBox_class</tabstop>
+  <tabstop>StewartComboBox_unknwPts</tabstop>
+  <tabstop>StewartComboBox_matdist</tabstop>
+  <tabstop>StewartpushButton_clear</tabstop>
+  <tabstop>StewartpushButton</tabstop>
+  <tabstop>buttonBox_close1</tabstop>
+  <tabstop>ReillyComboBox_pts</tabstop>
+  <tabstop>ReillyComboBox_field</tabstop>
+  <tabstop>ReillyComboBox_mask</tabstop>
+  <tabstop>ReillycomboBox_function</tabstop>
+  <tabstop>ReillydoubleSpinBox_resolution</tabstop>
+  <tabstop>ReillydoubleSpinBox_span</tabstop>
+  <tabstop>ReillydoubleSpinBox_beta</tabstop>
+  <tabstop>ReillyComboBox_unknwPts</tabstop>
+  <tabstop>ReillyComboBox_matdist</tabstop>
+  <tabstop>ReillypushButton_clear</tabstop>
+  <tabstop>ReillypushButton</tabstop>
+  <tabstop>buttonBox_close2</tabstop>
+  <tabstop>HuffComboBox_pts</tabstop>
+  <tabstop>HuffComboBox_field</tabstop>
+  <tabstop>HuffComboBox_mask</tabstop>
+  <tabstop>HuffcomboBox_function</tabstop>
+  <tabstop>HuffdoubleSpinBox_resolution</tabstop>
+  <tabstop>HuffdoubleSpinBox_span</tabstop>
+  <tabstop>HuffdoubleSpinBox_beta</tabstop>
+  <tabstop>HuffComboBox_unknwPts</tabstop>
+  <tabstop>HuffComboBox_matdist</tabstop>
+  <tabstop>HuffpushButton_clear</tabstop>
+  <tabstop>HuffpushButton</tabstop>
+  <tabstop>buttonBox_close3</tabstop>
+  <tabstop>textBrowser_2</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
