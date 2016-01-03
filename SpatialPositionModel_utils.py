@@ -11,10 +11,8 @@ from matplotlib.mlab import griddata
 def parse_expression(expr):
     nexpr = []
     dico = {
-        '*': np.multiply,
-        '-': np.subtract,
-        '/': np.divide,
-        '+': np.sum
+        '*': np.multiply, '-': np.subtract,
+        '/': np.divide, '+': np.sum
         }
     for i, char in enumerate(expr):
         nexpr.append(char)
@@ -25,6 +23,9 @@ def parse_expression(expr):
             except IndexError:
                 pass
     nexpr = ''.join(nexpr).split(' ')
+    for i in nexpr:
+        if not i.isalpha() and not i in ('*', '+', '-', '/'):
+            return -1
     if len(nexpr) == 3:
         fields = nexpr[:3:2]
         if "\"" in fields[0][0] or "'" in fields[0][0]:
@@ -79,42 +80,66 @@ def compute_potentials(matopport):
 def compute_reilly(mattoportes):
     return np.argmax(mattoportes, axis=0)
 
-def compute_huff(unknownpts, matopport):
+def compute_huff(matopport):
     sum_lines = matopport.sum(1)
     sum_lines = sum_lines[np.where(sum_lines > 0)[0]]
     matopportPct = np.array([100]) * (matopport[np.where(sum_lines > 0)[0]] / sum_lines[:, np.newaxis]).T
     return matopportPct.max(axis=1)
 
-def make_regular_points(bounds, resolution):
+def make_regular_points(bounds, resolution, skip_limit=False):
     """
     Return a grid of regular points.
     """
     xmin, ymin, xmax, ymax = bounds
-    nb_x = int(round((xmax - xmin) / resolution))
-    nb_y = int(round((ymax - ymin) / resolution))
-    w = (xmax - xmin) + (xmax - xmin) / 5
-    h = (ymax - ymin) + (ymax - ymin) / 5
-    prog_x = [(xmin - (xmax - xmin) / 5) + i * (w / nb_x) for i in xrange(nb_x+1)]
-    prog_y = [(ymin - (ymax - ymin) / 5) + i * (h / nb_y) for i in xrange(nb_y+1)]
-    return np.array([(x, y) for x in prog_x for y in prog_y])
+    nb_x = int(
+        round((xmax - xmin) / resolution + ((xmax - xmin) / resolution) /10))
+    nb_y = int(
+        round((ymax - ymin) / resolution + ((ymax - ymin) / resolution) /10))
+    try:
+        prog_x = \
+            [(xmin - (xmax - xmin) / 20) + resolution * i for i in range(nb_x + 1)]
+        prog_y = \
+            [(ymin - (ymax - ymin) / 20) + resolution * i for i in range(nb_y + 1)]
+    except ZeroDivisionError:
+        raise ZeroDivisionError(
+            'Please choose a finest resolution (by lowering the value of the '
+            'resolution argument and/or providing an appropriate mask layer')
+    print(len(prog_x) * len(prog_y))
+    if not skip_limit:            
+        if len(prog_x) * len(prog_y) > 500000:
+            raise ProbableMemoryError("Please choose a lower resolution"
+                                      " (by raising the value of the resolutio"
+                                      "n parameter)")
+    return (np.array([(x, y) for x in prog_x for y in prog_y]),
+            (len(prog_x), len(prog_y)))
 
+class ProbableMemoryError(Exception):
+    pass
 
-def render_stewart(pot, unknownpts, nb_class):
+def render_stewart(pot, unknownpts, nb_class, shape):
     x = np.array([c[0] for c in unknownpts])
     y = np.array([c[1] for c in unknownpts])
-    xi = np.linspace(np.nanmin(x), np.nanmax(x), len(x))
-    yi = np.linspace(np.nanmin(y), np.nanmax(y), len(y))
+    if not shape:
+        shape = (200,200)
+    xi = np.linspace(np.nanmin(x), np.nanmax(x), shape[0])
+    yi = np.linspace(np.nanmin(y), np.nanmax(y), shape[1])
     zi = griddata(x, y, pot, xi, yi, interp='linear')
     collec_poly = contourf(
         xi, yi, zi, nb_class, vmax=abs(zi).max(), vmin=-abs(zi).max())
     _ = [0] + [100/i for i in range(1, nb_class)][::-1]
     break_values = np.percentile(pot[pot.nonzero()[0]], q=_)
     break_values = np.append(np.array([0]), break_values)
-    res_poly = qgsgeom_from_mpl_collec(collec_poly.collections, levels=break_values.tolist())
-#    if mask is not None:
-#        res.geometry = res.geometry.apply(lambda x: x.intersection(unary_union(mask.geometry)))
-#        res = GeoDataFrame(geometry = [i for i in mask.geometry.values] + [i for i in res.geometry.values])
-    return res_poly, break_values
+    levels = [pot.min() + (pot.max()/i) for i in range(1, nb_class+1)][::-1]
+    res_poly = qgsgeom_from_mpl_collec(collec_poly.collections)
+    if len(res_poly) - len(levels) == 1:
+        levels = [0] + levels
+    elif len(res_poly) - len(levels) == 2:
+        levels = [0, 0] + levels
+    elif len(res_poly) - len(levels) == -1:
+        levels = levels[1:]
+    else:
+        pass
+    return res_poly, levels
 
 def render_reilly(reilly_values, unknownpts):
     x = np.array([c[0] for c in unknownpts])
@@ -130,13 +155,10 @@ def render_reilly(reilly_values, unknownpts):
     break_values = np.append(np.array([0]), break_values)
     res_poly = qgsgeom_from_mpl_collec(collec_poly.collections,
                                        levels=break_values.tolist())
-#    if mask is not None:
-#        res.geometry = res.geometry.apply(lambda x: x.intersection(unary_union(mask.geometry)))
-#        res = GeoDataFrame(geometry = [i for i in mask.geometry.values] + [i for i in res.geometry.values])
     return res_poly, break_values
 
 
-def qgsgeom_from_mpl_collec(collections, levels):
+def qgsgeom_from_mpl_collec(collections):
     polygons = []
     for i, polygon in enumerate(collections):
         mpoly = []

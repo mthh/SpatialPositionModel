@@ -46,7 +46,7 @@ PY_FILES = \
 	__init__.py \
 	SpatialPositionModel.py SpatialPositionModel_dialog.py SpatialPositionModel_utils.py
 
-UI_FILES = SpatialPositionModel_dialog_base2.ui
+UI_FILES = SpatialPositionModel_dialog_base.ui
 
 EXTRAS = metadata.txt icon.png
 
