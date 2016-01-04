@@ -18,13 +18,16 @@ def parse_expression(expr):
         nexpr.append(char)
         if char in ('/', '+', '*', '-', '(', ')'):
             try:
+                if nexpr[-2] != ' ':
+                    _ix = len(nexpr) - 1
+                    nexpr.insert(_ix, ' ')
                 if expr[i+1] != ' ':
                     nexpr.append(' ')
             except IndexError:
                 pass
     nexpr = ''.join(nexpr).split(' ')
     for i in nexpr:
-        if not i.isalpha() and not i in ('*', '+', '-', '/'):
+        if i.isdigit() and not i in ('*', '+', '-', '/'):
             return -1
     if len(nexpr) == 3:
         fields = nexpr[:3:2]
@@ -32,6 +35,7 @@ def parse_expression(expr):
             fields[0] = fields[0][1:-1]
         if "\"" in fields[1][0] or "'" in fields[1][0]:
             fields[1] = fields[1][1:-1]
+        print(fields, dico[nexpr[1]])
         return fields, dico[nexpr[1]]
     else:
         return -1
@@ -53,8 +57,8 @@ def make_dist_mat(xy1, xy2, longlat=False):
         d0 = np.subtract.outer(xy1[:,0], xy2[:,0])
         d1 = np.subtract.outer(xy1[:,1], xy2[:,1])
         return np.hypot(d0, d1)
-    else:
-        return hav_dist(xy1, xy2)
+    elif longlat:
+        return hav_dist(xy1[:, None], xy2)
 
 
 def compute_interact_density(matdist, typefun, beta, span):
@@ -126,17 +130,16 @@ def render_stewart(pot, unknownpts, nb_class, shape):
     zi = griddata(x, y, pot, xi, yi, interp='linear')
     collec_poly = contourf(
         xi, yi, zi, nb_class, vmax=abs(zi).max(), vmin=-abs(zi).max())
-    _ = [0] + [100/i for i in range(1, nb_class)][::-1]
-    break_values = np.percentile(pot[pot.nonzero()[0]], q=_)
-    break_values = np.append(np.array([0]), break_values)
-    levels = [pot.min() + (pot.max()/i) for i in range(1, nb_class+1)][::-1]
+    levels = [0] + [pot.max()/i for i in xrange(1, nb_class+1)][::-1]
+    levels = collec_poly.levels[1:]
+    levels[-1] = pot.max()
+    levels = levels.tolist()
     res_poly = qgsgeom_from_mpl_collec(collec_poly.collections)
-    if len(res_poly) - len(levels) == 1:
-        levels = [0] + levels
-    elif len(res_poly) - len(levels) == 2:
+    print('Nb poly : {}\n Levels :\n{}'.format(len(res_poly), levels))
+    if len(res_poly) - len(levels) == 2:
         levels = [0, 0] + levels
-    elif len(res_poly) - len(levels) == -1:
-        levels = levels[1:]
+    elif len(res_poly) == len(levels):
+        levels = [0] + levels
     else:
         pass
     return res_poly, levels

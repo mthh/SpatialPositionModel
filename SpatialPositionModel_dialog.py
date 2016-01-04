@@ -222,15 +222,15 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             value_list = [0] + [(value_range/i) for i in xrange(1, 5)][::-1]
             color_ramp_items = [
                 QgsColorRampShader.ColorRampItem(value_list[0], 
-                                                 QtGui.QColor('#d7191c')), 
+                                                 QtGui.QColor('#2c7bb6')), 
                 QgsColorRampShader.ColorRampItem(value_list[1], 
-                                                 QtGui.QColor('#fdae61')), 
+                                                 QtGui.QColor('#abd9e9')), 
                 QgsColorRampShader.ColorRampItem(value_list[2], 
                                                  QtGui.QColor('#ffffbf')),
                 QgsColorRampShader.ColorRampItem(value_list[3], 
-                                                 QtGui.QColor('#abdda4')),
+                                                 QtGui.QColor('#fdae61')),
                 QgsColorRampShader.ColorRampItem(value_list[4], 
-                                                 QtGui.QColor('#2b83ba'))
+                                                 QtGui.QColor('#d7191c'))
                 ]
 
         elif 'reilly' in mode:
@@ -483,17 +483,20 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
 #        print("Levels :\n{}".format(levels))
         pot_layer = QgsVectorLayer(
             "MultiPolygon?crs=epsg:{}&field=id:integer"
-            "&field=level:double".format(self.crs),
+            "&field=level_min:double"
+            "&field=level_max:double".format(self.crs),
             "stewart_potentials_span_{}_beta_{}".format(span, beta), "memory")
         data_provider = pot_layer.dataProvider()
         if mask_layer:
             features = []
             mask_geom = [f.geometry() for f in mask_layer.getFeatures()][0]
             for i, poly in enumerate(polygons):
-                ft = QgsFeature()
-                ft.setGeometry(poly.intersection(mask_geom.buffer(0, 16)))
-                ft.setAttributes([i, float(levels[i])])
-                features.append(ft)
+                geom = poly.intersection(mask_geom.buffer(0, 16))
+                if geom.area() > 0:
+                    ft = QgsFeature()
+                    ft.setGeometry(geom)
+                    ft.setAttributes([i, float(levels[i]), float(levels[i+1])])
+                    features.append(ft)
             data_provider.addFeatures(features[::-1])
 
         else:
