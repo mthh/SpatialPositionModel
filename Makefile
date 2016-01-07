@@ -38,17 +38,23 @@ LOCALES =
 # translation
 SOURCES = \
 	__init__.py \
-	SpatialPositionModel.py SpatialPositionModel_dialog.py SpatialPositionModel_utils.py
+	SpatialPositionModel.py \
+	SpatialPositionModel_dialog.py \
+	SpatialPositionModel_utils.py
 
 PLUGINNAME = SpatialPositionModel
 
 PY_FILES = \
 	__init__.py \
-	SpatialPositionModel.py SpatialPositionModel_dialog.py SpatialPositionModel_utils.py
+	SpatialPositionModel.py \
+	SpatialPositionModel_dialog.py \
+	SpatialPositionModel_utils.py
 
 UI_FILES = SpatialPositionModel_dialog_base.ui
 
-EXTRAS = metadata.txt icon.png
+EXTRAS = metadata.txt \
+	icon.png \
+	test_data/
 
 COMPILED_RESOURCE_FILES = resources.py
 
@@ -107,7 +113,7 @@ deploy: compile doc transcompile
 	cp -vf $(PY_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(UI_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(COMPILED_RESOURCE_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
-	cp -vf $(EXTRAS) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
+	cp -vfr $(EXTRAS) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vfr i18n $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vfr $(HELP) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)/help
 

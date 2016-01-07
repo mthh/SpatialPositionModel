@@ -70,6 +70,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.StewartpushButton_clear.clicked.connect(self.clear_stewart_fields)
         self.ReillypushButton_clear.clicked.connect(self.clear_reilly_fields)
         self.HuffpushButton_clear.clicked.connect(self.clear_huff_fields)
+        self.pushButton_data.clicked.connect(self.load_dataset)
 
     def clean_name_factory(self, name):
         assert name in {'Stewart', 'Reilly', 'Huff'}
@@ -320,8 +321,8 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             mat_dist = None
 
         mat_dens = compute_interact_density(mat_dist, function, beta, span)
-        mat_opport = compute_opportunity(pts_values, mat_dens)
-        huff_vals = compute_huff(mat_opport)
+#        mat_opport = compute_opportunity(pts_values, mat_dens)
+        huff_vals = compute_huff(compute_opportunity(pts_values, mat_dens))
 
         huff_layer = QgsVectorLayer(
             "Point?crs=epsg:{}&field=id:integer"
@@ -461,24 +462,31 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
                     [f.attribute(pts_values_field)
                      for f in pts_layer.getFeatures()])
             else:
-                pts_values = np.array([i for i in xrange(len(pts_coords))])
+                pts_values = np.array([1 for i in xrange(len(pts_coords))])
             mat_dens = compute_interact_density(mat_dist, function, beta, span)
-            mat_opport = compute_opportunity(pts_values, mat_dens)
-            pot = compute_potentials(mat_opport)
+#            mat_opport = compute_opportunity(pts_values, mat_dens)
+            pot = compute_potentials(compute_opportunity(pts_values, mat_dens))
 
         else:
             fields, operator = parse_expression(other_values_fields[0])
+            mat_dens = compute_interact_density(mat_dist, function, beta, span)
             pts_values1 = np.array(
                 [f.attribute(fields[0]) for f in pts_layer.getFeatures()])
             pts_values2 = np.array(
                 [f.attribute(fields[1]) for f in pts_layer.getFeatures()])
-            mat_dens = compute_interact_density(mat_dist, function, beta, span)
             mat_opport1 = compute_opportunity(pts_values1, mat_dens)
             mat_opport2 = compute_opportunity(pts_values2, mat_dens)
             pot1 = compute_potentials(mat_opport1)
             pot2 = compute_potentials(mat_opport2)
             pot = operator(pot1, pot2)
-
+            # pts_values = [[np.array(
+            #     [f.attribute(fields[i]) for f in pts_layer.getFeatures()])]
+            #     for i in xrange(len(fields))]
+            # pots = [
+            #     compute_potentials(compute_opportunity(pts_values[i], mat_dens))
+            #     for i in xrange(len(pts_values))
+            #     ]
+            # pot = 
         polygons, levels = render_stewart(pot, unknownpts, nb_class, shape)
 #        print("Levels :\n{}".format(levels))
         pot_layer = QgsVectorLayer(
@@ -504,7 +512,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             for i, poly in enumerate(polygons):
                 ft = QgsFeature()
                 ft.setGeometry(poly)
-                ft.setAttributes([i, float(levels[i])])
+                ft.setAttributes([i, float(levels[i]), float(levels[i+1])])
                 features.append(ft)
             data_provider.addFeatures(features[::-1])
 
@@ -522,3 +530,23 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         QgsMapLayerRegistry.instance().addMapLayer(pot_layer)
         self.iface.setActiveLayer(pot_layer)
         self.iface.zoomToActiveLayer()
+
+    def load_dataset(self):
+        home_path = \
+            os.getenv('HOMEPATH') or os.getenv('HOME') or os.getenv('USERPROFILE')
+        _  = self.iface.addVectorLayer(os.sep.join(
+            [home_path, '.qgis2', 'python', 'plugins', 'SpatialPositionModel',
+            'test_data', 'paris_mask.geojson']), 'paris_mask', 'ogr')
+        _ = self.iface.addVectorLayer(os.sep.join(
+            [home_path, '.qgis2', 'python', 'plugins', 'SpatialPositionModel',
+            'test_data', 'paris_hospitals.geojson']), 'paris_hospitals', 'ogr')
+        QtGui.QMessageBox.information(
+            self.iface.mainWindow(), 'Dataset loaded',
+            "Set these values and give a first try to the plug-in:\n\n"
+            "Point layer = \"paris_hospitals\"\n"
+            "Field = \"Capacite\"\n"
+            "Mask layer = \"paris_mask\"\n"
+            "resolution = 100\n"
+            "beta = 3\n"
+            "span = 1250\n"
+            "\n")

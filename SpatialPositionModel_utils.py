@@ -40,6 +40,15 @@ def parse_expression(expr):
     else:
         return -1
         
+#def qgs_features_factory(features, values, mode):
+#    qgs_features = []
+#    if mode == 1:
+#        for i, feature in enumerate(polygons):
+#            ft = QgsFeature()
+#            ft.setGeometry(poly)
+#            ft.setAttributes([i, float(values[i], float(values[i+1])])
+#            qgs_features.append(ft)
+#        return qgs_features
 
 def hav_dist(locs1, locs2, k=np.pi/180):
     # (lat, lon)
@@ -130,9 +139,9 @@ def render_stewart(pot, unknownpts, nb_class, shape):
     zi = griddata(x, y, pot, xi, yi, interp='linear')
     collec_poly = contourf(
         xi, yi, zi, nb_class, vmax=abs(zi).max(), vmin=-abs(zi).max())
-    levels = [0] + [pot.max()/i for i in xrange(1, nb_class+1)][::-1]
+    levels = [0] + [np.nanmax(pot)/i for i in xrange(1, nb_class+1)][::-1]
     levels = collec_poly.levels[1:]
-    levels[-1] = pot.max()
+    levels[-1] = np.nanmax(pot)
     levels = levels.tolist()
     res_poly = qgsgeom_from_mpl_collec(collec_poly.collections)
     print('Nb poly : {}\n Levels :\n{}'.format(len(res_poly), levels))
@@ -143,22 +152,6 @@ def render_stewart(pot, unknownpts, nb_class, shape):
     else:
         pass
     return res_poly, levels
-
-def render_reilly(reilly_values, unknownpts):
-    x = np.array([c[0] for c in unknownpts])
-    y = np.array([c[1] for c in unknownpts])
-    xi = np.linspace(np.nanmin(x), np.nanmax(x), round(np.sqrt(len(x))))
-    yi = np.linspace(np.nanmin(y), np.nanmax(y), round(np.sqrt(len(y))))
-    zi = griddata(x, y, reilly_values, xi, yi, interp='linear')
-    nb_class = len({ft for ft in reilly_values})
-    collec_poly = contourf(
-        xi, yi, zi, nb_class, vmax=abs(zi).max(), vmin=-abs(zi).max())
-    _ = [0] + [100/i for i in range(1, nb_class)][::-1]
-    break_values = np.percentile(reilly_values[reilly_values.nonzero()[0]], q=_)
-    break_values = np.append(np.array([0]), break_values)
-    res_poly = qgsgeom_from_mpl_collec(collec_poly.collections,
-                                       levels=break_values.tolist())
-    return res_poly, break_values
 
 
 def qgsgeom_from_mpl_collec(collections):
