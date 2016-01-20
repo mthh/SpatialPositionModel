@@ -29,7 +29,6 @@ import resources
 from SpatialPositionModel_dialog import SpatialPositionModelDialog
 from .SpatialPositionModel_utils import *
 import os.path
-import numpy as np
 
 class SpatialPositionModel:
     """QGIS Plugin Implementation."""
