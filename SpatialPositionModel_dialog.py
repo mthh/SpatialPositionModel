@@ -32,47 +32,15 @@ from qgis.core import *
 from .SpatialPositionModel_utils import *
 from httplib import HTTPConnection
 from sys import version_info
-
+from matplotlib.pyplot import contourf
+from shapely.geometry import Polygon, MultiPolygon
+from shapely.ops import cascaded_union
+    
 import os.path
 import processing
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'SpatialPositionModel_dialog_base.ui'))
-
-FORM_CLASS_host, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'config_host.ui'))
-
-
-class ConfigHost(QtGui.QDialog, FORM_CLASS_host):
-    def __init__(self, iface, parent=None):
-        """Constructor."""
-        super(ConfigHost, self).__init__(parent)
-        self.setupUi(self)
-        self.iface = iface
-        self.url_ok = None
-        self.headers = {
-            'connection': 'keep-alive',
-            'User-Agent': ' '.join(
-                ['QGIS-desktop', QGis.QGIS_VERSION, '/',
-                 'Python-httplib',
-                 str(version_info[:3])[1:-1].replace(', ', '.')])
-            }
-
-    def test_host(self):
-        self.host = check_host(self.lineEdit_host.text())
-        self.lineEdit_host.setText(self.host)
-        conn = HTTPConnection(self.host)
-        url = "/nearest?loc=42.123456,21.369258"
-        try:
-            conn.request('GET', url, headers=self.headers)
-            self.url_ok = True
-        except:
-            QtGui.QMessageBox.information(
-                self.iface.mainWindow(), 'Error',
-                "Invalid URL or OSRM is not running")
-            self.host = ''
-            self.url_ok = False
-
 
 class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
     def __init__(self, iface, parent=None):
@@ -109,14 +77,6 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.ReillypushButton_clear.clicked.connect(self.clear_reilly_fields)
         self.HuffpushButton_clear.clicked.connect(self.clear_huff_fields)
         self.pushButton_data.clicked.connect(self.load_dataset)
-        self.checkBox_osrm.stateChanged.connect(
-            lambda st: self.StewartComboBox_matdist.setEnabled(False) if
-            st == 2 else self.StewartComboBox_matdist.setEnabled(True))
-        self.checkBox_osrm.stateChanged.connect(
-            lambda st: self.label_29.setEnabled(False) if
-            st == 2 else self.label_29.setEnabled(True))
-        self.checkBox_osrm.stateChanged.connect(
-            lambda st: self.osrm_config() if st == 2 else None)
 
     def clean_name_factory(self, name):
         assert name in {'Stewart', 'Reilly', 'Huff'}
@@ -142,23 +102,12 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.mFieldExpressionWidget.setLayer(None)
         self.checkBox_osrm.setChecked(False)
 
-    def clear_reilly_fields(self):
-        self.clean_name_factory('Reilly')
+#    def clear_reilly_fields(self):
+#        self.clean_name_factory('Reilly')
+#
+#    def clear_huff_fields(self):
+#        self.clean_name_factory('Huff')
 
-    def clear_huff_fields(self):
-        self.clean_name_factory('Huff')
-
-    def osrm_config(self):
-        win = ConfigHost(self.iface)
-        if win.exec_():
-            win.test_host()
-            if win.url_ok:
-                self.host = win.host
-                return
-
-        self.checkBox_osrm.setChecked(False)
-        self.StewartComboBox_matdist.setEnabled(True)
-        self.label_29.setEnabled(True)
 
     def run_reilly(self):
         pts_layer = self.ReillyComboBox_pts.currentLayer()
@@ -213,42 +162,42 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
 
         reilly_layer, grass_region_size = prepare_raster(
             'reilly', self.crs, reilly_val, unknownpts, mask_layer, resolution)
-#        reilly_layer = QgsVectorLayer(
-#            "Point?crs=epsg:{}&field=id:integer"
-#            "&field=level:double".format(self.crs),
-#            "reilly_pts", "memory")
-#        data_provider = reilly_layer.dataProvider()
-#        features = []
-#        if not mask_layer:
-#            for i in xrange(len(unknownpts)):
-#                ft = QgsFeature()
-#                ft.setGeometry(QgsGeometry.fromPoint(
-#                    QgsPoint(unknownpts[i][0], unknownpts[i][1])))
-#                ft.setAttributes([i, float(reilly_val[i])])
-#                features.append(ft)
-#            data_provider.addFeatures(features)
-#
-#        elif mask_layer:  # TODO : Améliorer le découpage qd il y a un mask
-#            index = QgsSpatialIndex()
-#            mask_features = {ft.id(): ft for ft in mask_layer.getFeatures()}
-#            map(index.insertFeature,mask_features.values())
-#            for i in xrange(len(unknownpts)):
-#                tmp_pt = QgsGeometry.fromPoint(
-#                    QgsPoint(unknownpts[i][0], unknownpts[i][1]))
-#                ids = index.intersects(tmp_pt.buffer(resolution, 4).boundingBox())
-#                for _id in ids:
-#                    mask_ft = mask_features[_id]
-#                    if tmp_pt.buffer(resolution, 4).intersects(mask_ft.geometry()):
-#                        ft = QgsFeature()
-#                        ft.setGeometry(tmp_pt)
-#                        ft.setAttributes([i, float(reilly_val[i])])
-#                        features.append(ft)
-#            data_provider.addFeatures(features)
-#        QgsMapLayerRegistry.instance().addMapLayer(reilly_layer)
-#        ext = reilly_layer.extent()
-#        offset = resolution / 2
-#        size = str(ext.xMinimum()-offset) + ',' + str(ext.xMaximum()+offset) \
-#            + ',' + str(ext.yMinimum()-offset) + ',' + str(ext.yMaximum()+offset)
+        reilly_layer = QgsVectorLayer(
+            "Point?crs=epsg:{}&field=id:integer"
+            "&field=level:double".format(self.crs),
+            "reilly_pts", "memory")
+        data_provider = reilly_layer.dataProvider()
+        features = []
+        if not mask_layer:
+            for i in xrange(len(unknownpts)):
+                ft = QgsFeature()
+                ft.setGeometry(QgsGeometry.fromPoint(
+                    QgsPoint(unknownpts[i][0], unknownpts[i][1])))
+                ft.setAttributes([i, float(reilly_val[i])])
+                features.append(ft)
+            data_provider.addFeatures(features)
+
+        elif mask_layer:  # TODO : Améliorer le découpage qd il y a un mask
+            index = QgsSpatialIndex()
+            mask_features = {ft.id(): ft for ft in mask_layer.getFeatures()}
+            map(index.insertFeature,mask_features.values())
+            for i in xrange(len(unknownpts)):
+                tmp_pt = QgsGeometry.fromPoint(
+                    QgsPoint(unknownpts[i][0], unknownpts[i][1]))
+                ids = index.intersects(tmp_pt.buffer(resolution, 4).boundingBox())
+                for _id in ids:
+                    mask_ft = mask_features[_id]
+                    if tmp_pt.buffer(resolution, 4).intersects(mask_ft.geometry()):
+                        ft = QgsFeature()
+                        ft.setGeometry(tmp_pt)
+                        ft.setAttributes([i, float(reilly_val[i])])
+                        features.append(ft)
+            data_provider.addFeatures(features)
+        QgsMapLayerRegistry.instance().addMapLayer(reilly_layer)
+        ext = reilly_layer.extent()
+        offset = resolution / 2
+        size = str(ext.xMinimum()-offset) + ',' + str(ext.xMaximum()+offset) \
+            + ',' + str(ext.yMinimum()-offset) + ',' + str(ext.yMaximum()+offset)
         processing.runandload(
             'grass:v.to.rast.attribute', reilly_layer, 0,
             "level", size, resolution, -1, 0.0001, "Rasterized")
@@ -311,11 +260,15 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         matdist = self.HuffComboBox_matdist.currentLayer()
         function = (self.HuffcomboBox_function.currentText()).lower()
 
+        self.crs = pts_layer.crs()
+
+        self.longlat = self.crs.geographicFlag()
+
         pts_coords = np.array(
             [f.geometry().asPoint() for f in pts_layer.getFeatures()])
-        self.crs = int(pts_layer.dataProvider().crs().authid().split(':')[1])
 
         pts_values_field = self.HuffComboBox_field.currentField()
+
         if pts_values_field:
             pts_values = np.array(
                 [f.attribute(pts_values_field) for f in pts_layer.getFeatures()])
@@ -326,19 +279,22 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         span = self.HuffdoubleSpinBox_span.value()
         resolution = self.HuffdoubleSpinBox_resolution.value()
 
+        print('beta: ', beta)
+        print('span: ', span)
+        print('resolution: ', resolution)
+
         assert resolution != 0 and beta != 0 and span != 0
 
         if unknownpts_layer:
             unknownpts_coords = \
                 [f.geometry().asPoint() for f in unknownpts_layer.getFeatures()]
-            crs_unknpts = int(
-                pts_layer.dataProvider().crs().authid().split(':')[1])
-            assert self.crs == crs_unknpts
+            assert self.crs.authid() == unknownpts_layer.crs().authid()
             unknownpts = np.array(unknownpts_coords)
         else:
             try:
                 unknownpts, shape = \
-                    gen_unknownpts(pts_layer, mask_layer, resolution)
+                    gen_unknownpts(
+                        pts_layer, mask_layer, resolution, self.longlat)
             except ProbableMemoryError as err:
                 self.display_log_error(err, 2)
                 return -1
@@ -347,59 +303,60 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
                 return -1
 
         if not matdist:
-            mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=False)
+            mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
         else:
             mat_dist = None
 
         mat_dens = compute_interact_density(mat_dist, function, beta, span)
         huff_vals = compute_huff(compute_opportunity(pts_values, mat_dens))
 
-#        huff_layer = QgsVectorLayer(
-#            "Point?crs=epsg:{}&field=id:integer"
-#            "&field=level:double".format(self.crs),
-#            "huff_pts", "memory")
-#        data_provider = huff_layer.dataProvider()
-#        features = []
-#        if not mask_layer:
-#            for i in xrange(len(unknownpts)):
-#                ft = QgsFeature()
-#                ft.setGeometry(QgsGeometry.fromPoint(
-#                    QgsPoint(unknownpts[i][0], unknownpts[i][1])))
-#                ft.setAttributes([i, float(huff_vals[i])])
-#                features.append(ft)
-#            data_provider.addFeatures(features)
-#
-#        elif mask_layer: # TODO : Améliorer le découpage qd il y a un mask
-#            index = QgsSpatialIndex()
-#            mask_features = {ft.id(): ft for ft in mask_layer.getFeatures()}
-#            map(index.insertFeature, mask_features.values())
-#            for i in xrange(len(unknownpts)):
-#                tmp_pt = QgsGeometry.fromPoint(
-#                    QgsPoint(unknownpts[i][0], unknownpts[i][1]))
-#                ids = index.intersects(tmp_pt.buffer(resolution, 4).boundingBox())
-#                for _id in ids:
-#                    mask_ft = mask_features[_id]
-#                    if tmp_pt.buffer(resolution, 4).intersects(mask_ft.geometry()):
-#                        ft = QgsFeature()
-#                        ft.setGeometry(tmp_pt)
-#                        ft.setAttributes([i, float(huff_vals[i])])
-#                        features.append(ft)
-#            data_provider.addFeatures(features)
-#        QgsMapLayerRegistry.instance().addMapLayer(huff_layer)
-#        ext = huff_layer.extent()
-#        offset = resolution / 2
-#        size = str(ext.xMinimum()-offset) + ',' + str(ext.xMaximum()+offset) \
-#            + ',' + str(ext.yMinimum()-offset) + ',' + str(ext.yMaximum()+offset)
-        huff_layer, grass_region_size = prepare_raster(
-            'huff', self.crs, huff_vals, unknownpts, mask_layer, resolution)
-        processing.runandload(
-            'grass:v.to.rast.attribute', huff_layer, 0,
-            "level", size, resolution, -1, 0.0001, "Rasterized")
-        QgsMapLayerRegistry.instance().removeMapLayer(huff_layer.id())
+        huff_layer = QgsVectorLayer(
+            "Point?crs={}&field=id:integer"
+            "&field=level:double".format(self.crs.authid()),
+            "huff_pts", "memory")
+        data_provider = huff_layer.dataProvider()
+        features = []
+        if not mask_layer:
+            for i in xrange(len(unknownpts)):
+                ft = QgsFeature()
+                ft.setGeometry(QgsGeometry.fromPoint(
+                    QgsPoint(unknownpts[i][0], unknownpts[i][1])))
+                ft.setAttributes([i, float(huff_vals[i])])
+                features.append(ft)
+            data_provider.addFeatures(features)
+
+        elif mask_layer: # TODO : Améliorer le découpage qd il y a un mask
+            index = QgsSpatialIndex()
+            mask_features = {ft.id(): ft for ft in mask_layer.getFeatures()}
+            map(index.insertFeature, mask_features.values())
+            for i in xrange(len(unknownpts)):
+                tmp_pt = QgsGeometry.fromPoint(
+                    QgsPoint(unknownpts[i][0], unknownpts[i][1]))
+                ids = index.intersects(tmp_pt.buffer(resolution, 4).boundingBox())
+                for _id in ids:
+                    mask_ft = mask_features[_id]
+                    if tmp_pt.buffer(resolution, 4).intersects(mask_ft.geometry()):
+                        ft = QgsFeature()
+                        ft.setGeometry(tmp_pt)
+                        ft.setAttributes([i, float(huff_vals[i])])
+                        features.append(ft)
+            data_provider.addFeatures(features)
+        QgsMapLayerRegistry.instance().addMapLayer(huff_layer)
+        ext = huff_layer.extent()
+        offset = resolution / 2
+        size = str(ext.xMinimum()-offset) + ',' + str(ext.xMaximum()+offset) \
+            + ',' + str(ext.yMinimum()-offset) + ',' + str(ext.yMaximum()+offset)
+#        huff_layer, grass_region_size = prepare_raster(
+#            'huff', self.crs.authid(), huff_vals, unknownpts, mask_layer, resolution)
+        print('size: ', size)
+#        processing.runandload(
+#            'grass:v.to.rast.attribute', huff_layer, 0,
+#            "level", size, resolution, -1, 0.0001, "Rasterized")
+#        QgsMapLayerRegistry.instance().removeMapLayer(huff_layer.id())
         rast = QgsMapLayerRegistry.instance().mapLayersByName("Rasterized")[0]
         rast.setLayerName('Huff_potential_catchment_area_span_{}_beta_{}'
                           .format(span, beta))
-        self.render_raster(rast, 'huff')
+#        self.render_raster(rast, 'huff')
         self.iface.setActiveLayer(rast)
         self.iface.zoomToActiveLayer()
 
@@ -408,12 +365,14 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         mask_layer = self.StewartComboBox_mask.currentLayer()
         unknownpts_layer = self.StewartComboBox_unknwPts.currentLayer()
         shape = None
-        matdist = self.StewartComboBox_matdist.currentLayer()
+#        matdist = self.StewartComboBox_matdist.currentLayer()
         function = (self.StewartcomboBox_function.currentText()).lower()
+
+        self.crs = pts_layer.dataProvider().crs()
+        self.longlat = self.crs.geographicFlag()
 
         pts_coords = np.array(
             [f.geometry().asPoint() for f in pts_layer.getFeatures()])
-        self.crs = int(pts_layer.dataProvider().crs().authid().split(':')[1])
 
         pts_values_field = self.StewartComboBox_field.currentField()
         other_values_fields = self.mFieldExpressionWidget.currentField()
@@ -423,6 +382,10 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         resolution = self.StewartdoubleSpinBox_resolution.value()
         nb_class = self.StewartspinBox_class.value()
 
+        print('beta: ', beta)
+        print('span: ', span)
+        print('resolution: ', resolution)
+        print('nb_class: ', nb_class)
         try:
             assert resolution != 0 and beta != 0 and span != 0
         except AssertionError as err:
@@ -430,17 +393,17 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             return -1
 
         if unknownpts_layer:
-            unknownpts_coords = [f.geometry().asPoint() for f
-                                 in unknownpts_layer.getFeatures()]
-            crs_unknpts = int(
-                pts_layer.dataProvider().crs().authid().split(':')[1])
-            assert self.crs == crs_unknpts
-            unknownpts = np.array(unknownpts_coords)
+            if self.crs.authid() is not unknownpts_layer.dataProvider().crs().authid():
+                self.display_log_error("Crs mismatch between", 4)
+                return -1
+            unknownpts = np.array(
+                [f.geometry().asPoint() for f in unknownpts_layer.getFeatures()])
 
         else:
             try:
                 unknownpts, shape = \
-                    gen_unknownpts(pts_layer, mask_layer, resolution)
+                    gen_unknownpts(
+                        pts_layer, mask_layer, resolution, self.longlat)
             except ProbableMemoryError as err:
                 self.display_log_error(err, 2)
                 return -1
@@ -448,17 +411,8 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
                 self.display_log_error(er, 3)
                 return -1
 
-        try:
-            if self.checkBox_osrm.isChecked() and self.host:
-                mat_dist = get_osrm_matdist(self.host, pts_coords, unknownpts, self.crs)
-                span = span * 10
-            elif not matdist:
-                mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=False)
-            else:
-                mat_dist = get_matdist_user(matdist, len(pts_coors), len(unknownpts))
-        except Exception as err:
-            self.display_log_error(err, 1)
-            return -1
+
+        mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
 
         if not other_values_fields[0]:
             if pts_values_field:
@@ -490,13 +444,32 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             #     for i in xrange(len(pts_values))
             #     ]
             # pot =
-        polygons, levels = prepare_stewart(pot, unknownpts, nb_class, shape)
+
+        print(pot)
+
+        x = np.array(list(set([c[0] for c in unknownpts])))
+        y = np.array(list(set([c[1] for c in unknownpts])))
+        xi = np.linspace(np.nanmin(x), np.nanmax(x), shape[0])
+        yi = np.linspace(np.nanmin(y), np.nanmax(y), shape[1])
+
+        collec_poly = contourf(
+            xi, yi,
+            pot.reshape((shape)).T,
+            nb_class,
+            vmax=abs(pot).max(),
+            vmin=-abs(pot).max())
+        levels = collec_poly.levels[1:]
+        levels[-1] = np.nanmax(pot)
+        levels = levels.tolist()
+
+        res_poly = qgsgeom_from_mpl_collec(collec_poly.collections)
+
         pot_layer = QgsVectorLayer(
-            "MultiPolygon?crs=epsg:{}&field=id:integer"
+            "MultiPolygon?crs={}&field=id:integer"
             "&field=level_min:double"
-            "&field=level_max:double".format(self.crs),
+            "&field=level_max:double".format(self.crs.authid()),
             "stewart_potentials_span_{}_beta_{}".format(span, beta), "memory")
-        renderer = render_stewart(polygons, pot_layer, levels, nb_class, mask_layer)
+        renderer = render_stewart(res_poly, pot_layer, levels, nb_class, mask_layer)
 
         pot_layer.setRendererV2(renderer)
         QgsMapLayerRegistry.instance().addMapLayer(pot_layer)

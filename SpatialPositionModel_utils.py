@@ -9,110 +9,111 @@ from qgis.core import (
     QgsGraduatedSymbolRendererV2, QgsFillSymbolV2, QgsVectorLayer,
     QgsSpatialIndex, QgsMapLayerRegistry,
     )
-from matplotlib.pyplot import contourf
-from matplotlib.mlab import griddata
-import json
-from sys import version_info
-from httplib import HTTPConnection
+#from matplotlib.pyplot import contourf
+from shapely.wkb import loads
+from shapely.ops import cascaded_union
 
-# TODO : definir le '__all__' = 
-
-def check_host(url):
-    """ Helper function to get the hostname in desired format """
-    if len(url) < 4:
-        raise ValueError('Probably empty/non-valable url')
-    if not ('http' in url and '//' in url) and url[-1] == '/':
-        host = url[:-1]
-    elif not ('http:' in url and '//' in url):
-        host = url
-    elif 'http://' in url[:7] and url[-1] == '/':
-        host = url[7:-1]
-    elif 'http://' in url[:7]:
-        host = url[7:]
-    else:
-        host = url
-    return host
+#import json
+#from sys import version_info
+#from httplib import HTTPConnection
 
 
-def rectangular_light_table(src_coords, dest_coords, conn):
-    """
-    Function wrapping new OSRM 'table' function in order to get a rectangular
-    matrix of time distance as a numpy array
+#def check_host(url):
+#    """ Helper function to get the hostname in desired format """
+#    if len(url) < 4:
+#        raise ValueError('Probably empty/non-valable url')
+#    if not ('http' in url and '//' in url) and url[-1] == '/':
+#        host = url[:-1]
+#    elif not ('http:' in url and '//' in url):
+#        host = url
+#    elif 'http://' in url[:7] and url[-1] == '/':
+#        host = url[7:-1]
+#    elif 'http://' in url[:7]:
+#        host = url[7:]
+#    else:
+#        host = url
+#    return host
 
-    Params :
 
-        src_coords: list
-            A list of coord as (x, y) , like :
-                 list_coords = [(21.3224, 45.2358),
-                                (21.3856, 42.0094),
-                                (20.9574, 41.5286)] (coords have to be float)
-        dest_coords: list
-            A list of coord as (x, y) , like :
-                 list_coords = [(21.3224, 45.2358),
-                                (21.3856, 42.0094),
-                                (20.9574, 41.5286)] (coords have to be float)
-        conn: httplib.HTTPConnection object
-        headers: dict
-            headers (as dict) to be transmited to the
-            httplib.HTTPConnection.request function.
-
-    Output:
-        - a numpy array containing the time in tenth of seconds
-            (where 2147483647 means not-found route)
-        - a numpy array of snapped source coordinates (lat, lng)
-        - a numpy array of snapped destination coordinates (lat, lng)
-
-        ValueError is raised in case of any error
-            (wrong list of coords/ids, unknow host,
-            wrong response from the host, etc.)
-    """
-    headers = {
-        'connection': 'keep-alive',
-        'User-Agent': ' '.join(
-            ['QGIS-desktop', QGis.QGIS_VERSION, '/',
-             'Python-httplib', str(version_info[:3])[1:-1].replace(', ', '.')])
-        }
-    query = ['/table?src=']
-    # If only one source code (not nested) :
-    if len(src_coords) == 2 and not isinstance(src_coords[0],
-                                               (list, tuple, QgsPoint)):
-        query.append(''.join(
-            [str(src_coords[1]), ',', str(src_coords[0]), '&dst=']))
-    else: # Otherwise :
-        for coord in src_coords:  # Preparing the query
-            if coord is not None:
-                tmp = ''.join([str(coord[1]), ',', str(coord[0]), '&src='])
-                query.append(tmp)
-        query[-1] = query[-1][:-5] + '&dst='
-
-    if len(dest_coords) == 2 and not isinstance(dest_coords[0],
-                                                (list, tuple, QgsPoint)):
-        tmp = ''.join([str(dest_coords[1]), ',', str(dest_coords[0]), '&dst='])
-        query.append(tmp)
-    else:
-        for coord in dest_coords:  # Preparing the query
-            if coord is not None:
-                tmp = ''.join([str(coord[1]), ',', str(coord[0]), '&dst='])
-                query.append(tmp)
-
-    query = (''.join(query))[:-5]
-    try:  # Querying the OSRM instance
-        conn.request('GET', query, headers=headers)
-        parsed_json = json.loads(conn.getresponse().read().decode('utf-8'))
-    except Exception as err:
-        raise ValueError('Error while contacting OSRM instance : \n{}'
-                         .format(err))
-
-    if 'distance_table' in parsed_json.keys():  # Preparing the result matrix
-        mat = np.array(parsed_json['distance_table'], dtype='int32')
-        src_snapped = \
-            np.array(parsed_json['source_coordinates'], dtype=float)
-        dest_snapped = \
-            np.array(parsed_json['destination_coordinates'], dtype=float)
-        return mat, src_snapped, dest_snapped
-    else:
-        raise ValueError('No distance table return by OSRM instance')
-
+#def rectangular_light_table(src_coords, dest_coords, conn):
+#    """
+#    Function wrapping new OSRM 'table' function in order to get a rectangular
+#    matrix of time distance as a numpy array
+#
+#    Params :
+#
+#        src_coords: list
+#            A list of coord as (x, y) , like :
+#                 list_coords = [(21.3224, 45.2358),
+#                                (21.3856, 42.0094),
+#                                (20.9574, 41.5286)] (coords have to be float)
+#        dest_coords: list
+#            A list of coord as (x, y) , like :
+#                 list_coords = [(21.3224, 45.2358),
+#                                (21.3856, 42.0094),
+#                                (20.9574, 41.5286)] (coords have to be float)
+#        conn: httplib.HTTPConnection object
+#        headers: dict
+#            headers (as dict) to be transmited to the
+#            httplib.HTTPConnection.request function.
+#
+#    Output:
+#        - a numpy array containing the time in tenth of seconds
+#            (where 2147483647 means not-found route)
+#        - a numpy array of snapped source coordinates (lat, lng)
+#        - a numpy array of snapped destination coordinates (lat, lng)
+#
+#        ValueError is raised in case of any error
+#            (wrong list of coords/ids, unknow host,
+#            wrong response from the host, etc.)
+#    """
+#    headers = {
+#        'connection': 'keep-alive',
+#        'User-Agent': ' '.join(
+#            ['QGIS-desktop', QGis.QGIS_VERSION, '/',
+#             'Python-httplib', str(version_info[:3])[1:-1].replace(', ', '.')])
+#        }
+#    query = ['/table?src=']
+#    # If only one source code (not nested) :
+#    if len(src_coords) == 2 and not isinstance(src_coords[0],
+#                                               (list, tuple, QgsPoint)):
+#        query.append(''.join(
+#            [str(src_coords[1]), ',', str(src_coords[0]), '&dst=']))
+#    else: # Otherwise :
+#        for coord in src_coords:  # Preparing the query
+#            if coord is not None:
+#                tmp = ''.join([str(coord[1]), ',', str(coord[0]), '&src='])
+#                query.append(tmp)
+#        query[-1] = query[-1][:-5] + '&dst='
+#
+#    if len(dest_coords) == 2 and not isinstance(dest_coords[0],
+#                                                (list, tuple, QgsPoint)):
+#        tmp = ''.join([str(dest_coords[1]), ',', str(dest_coords[0]), '&dst='])
+#        query.append(tmp)
+#    else:
+#        for coord in dest_coords:  # Preparing the query
+#            if coord is not None:
+#                tmp = ''.join([str(coord[1]), ',', str(coord[0]), '&dst='])
+#                query.append(tmp)
+#
+#    query = (''.join(query))[:-5]
+#    try:  # Querying the OSRM instance
+#        conn.request('GET', query, headers=headers)
+#        parsed_json = json.loads(conn.getresponse().read().decode('utf-8'))
+#    except Exception as err:
+#        raise ValueError('Error while contacting OSRM instance : \n{}'
+#                         .format(err))
+#
+#    if 'distance_table' in parsed_json.keys():  # Preparing the result matrix
+#        mat = np.array(parsed_json['distance_table'], dtype='int32')
+#        src_snapped = \
+#            np.array(parsed_json['source_coordinates'], dtype=float)
+#        dest_snapped = \
+#            np.array(parsed_json['destination_coordinates'], dtype=float)
+#        return mat, src_snapped, dest_snapped
+#    else:
+#        raise ValueError('No distance table return by OSRM instance')
+#
 
 def parse_expression(expr):
     nexpr = []
@@ -148,8 +149,7 @@ def parse_expression(expr):
 
 def prepare_raster(mode, crs, values, unknownpts, mask_layer, resolution):
     pts_layer = QgsVectorLayer(
-        "Point?crs=epsg:{}&field=id:integer"
-        "&field=level:double".format(crs),
+        "Point?crs={}&field=id:integer&field=level:double".format(crs),
         "{}_pts".format(mode), "memory")
     data_provider = pts_layer.dataProvider()
     features = []
@@ -185,15 +185,32 @@ def prepare_raster(mode, crs, values, unknownpts, mask_layer, resolution):
         + ',' + str(ext.yMinimum()-offset) + ',' + str(ext.yMaximum()+offset)
     return pts_layer, grass_region_size
 
-def hav_dist(locs1, locs2, k=np.pi/180):
-    # (lat, lon)
-    locs1 = locs1 * k
-    locs2 = locs2 * k
+
+def hav_dist(locs1, locs2):
+    """
+    Return a distance matrix between two set of coordinates.
+    Use geometric distance (default) or haversine distance (if longlat=True).
+
+    Parameters
+    ----------
+    locs1 : numpy.array
+        The first set of coordinates as [(long, lat), (long, lat)].
+    locs2 : numpy.array
+        The second set of coordinates as [(long, lat), (long, lat)].
+
+    Returns
+    -------
+    mat_dist : numpy.array
+        The distance matrix between locs1 and locs2
+    """
+    locs1 = np.radians(locs1)
+    locs2 = np.radians(locs2)
     cos_lat1 = np.cos(locs1[..., 0])
     cos_lat2 = np.cos(locs2[..., 0])
     cos_lat_d = np.cos(locs1[..., 0] - locs2[..., 0])
     cos_lon_d = np.cos(locs1[..., 1] - locs2[..., 1])
-    return 6367 * np.arccos(cos_lat_d - cos_lat1 * cos_lat2 * (1 - cos_lon_d))
+    return 6367 * np.arccos(
+        cos_lat_d - cos_lat1 * cos_lat2 * (1 - cos_lon_d))
 
 
 def make_dist_mat(xy1, xy2, longlat=False):
@@ -218,7 +235,7 @@ def compute_interact_density(matdist, typefun, beta, span):
     return matDens.round(8)
 
 
-def gen_unknownpts(pts_layer, mask_layer, resolution):
+def gen_unknownpts(pts_layer, mask_layer, resolution, longlat):
     if mask_layer:
         crs_mask = int(
             mask_layer.dataProvider().crs().authid().split(':')[1])
@@ -240,38 +257,38 @@ def gen_unknownpts(pts_layer, mask_layer, resolution):
         bounds = (bounds[0] - tmp, bounds[1] - tmp,
                   bounds[2] + tmp, bounds[3] + tmp)
 
-    return make_regular_points(bounds, resolution)
+    return make_regular_points(bounds, resolution, longlat)
 
 
-def get_osrm_matdist(host, pts_coords, unknownpts, crs):
-    conn = HTTPConnection(host)
-    xform = QgsCoordinateTransform(QgsCoordinateReferenceSystem(crs),
-                                   QgsCoordinateReferenceSystem(4326))
-    pts_coords_temp = \
-        [xform.transform(QgsPoint(*point)) for point in pts_coords]
-    unknownpts_temp = \
-        [xform.transform(QgsPoint(*point)) for point in unknownpts]
-    mat_dist, _, _ = \
-        rectangular_light_table(pts_coords_temp, unknownpts_temp, conn)
+#def get_osrm_matdist(host, pts_coords, unknownpts, crs):
+#    conn = HTTPConnection(host)
+#    xform = QgsCoordinateTransform(QgsCoordinateReferenceSystem(crs),
+#                                   QgsCoordinateReferenceSystem(4326))
+#    pts_coords_temp = \
+#        [xform.transform(QgsPoint(*point)) for point in pts_coords]
+#    unknownpts_temp = \
+#        [xform.transform(QgsPoint(*point)) for point in unknownpts]
+#    mat_dist, _, _ = \
+#        rectangular_light_table(pts_coords_temp, unknownpts_temp, conn)
+#
+#    return mat_dist
 
-    return mat_dist
 
-
-def get_matdist_user(matdist, dim1, dim2):
-    try:
-        mat_dist = np.array([
-             map(int, feat.attributes()[1:])
-             for feat in matdist.getFeatures()
-             ])
-    except ValueError:
-        mat_dist = np.array([
-            map(float, feat.attributes()[1:])
-            for feat in matdist.getFeatures()
-            ])
-    assert dim1 in mat_dist.shape \
-        and dim2 in mat_dist.shape
-    return mat_dist
-
+#def get_matdist_user(matdist, dim1, dim2):
+#    try:
+#        mat_dist = np.array([
+#             map(int, feat.attributes()[1:])
+#             for feat in matdist.getFeatures()
+#             ])
+#    except ValueError:
+#        mat_dist = np.array([
+#            map(float, feat.attributes()[1:])
+#            for feat in matdist.getFeatures()
+#            ])
+#    assert dim1 in mat_dist.shape \
+#        and dim2 in mat_dist.shape
+#    return mat_dist
+#
 
 def compute_opportunity(pts_values, matdens):
     matOpport = pts_values[:, np.newaxis] * matdens
@@ -294,55 +311,126 @@ def compute_huff(matopport):
     return matopportPct.max(axis=1)
 
 
-def make_regular_points(bounds, reso, skip_limit=False):
+#def make_regular_points(bounds, reso, skip_limit=False, longlat=True):
+#    """
+#    Return a grid of regular points.
+#    """
+#    xmin, ymin, xmax, ymax = bounds
+#    nb_x = int(round((xmax - xmin) / reso + ((xmax - xmin) / reso) /10))
+#    nb_y = int(round((ymax - ymin) / reso + ((ymax - ymin) / reso) /10))
+#    try:
+#        prog_x = \
+#            [(xmin - (xmax - xmin) / 20) + reso * i for i in range(nb_x + 1)]
+#        prog_y = \
+#            [(ymin - (ymax - ymin) / 20) + reso * i for i in range(nb_y + 1)]
+#    except ZeroDivisionError:
+#        raise ZeroDivisionError(
+#            'Please choose a finest resolution (by lowering the value of the '
+#            'resolution argument and/or providing an appropriate mask layer')
+#    print(len(prog_x) * len(prog_y))
+#    if not skip_limit:            
+#        if len(prog_x) * len(prog_y) > 500000:
+#            raise ProbableMemoryError("Please choose a lower resolution"
+#                                      " (by raising the value of the resolutio"
+#                                      "n parameter)")
+#    return (np.array([(x, y) for x in prog_x for y in prog_y]),
+#            (len(prog_x), len(prog_y)))
+#
+
+def make_regular_points(bounds, resolution, longlat=True):
     """
-    Return a grid of regular points.
+    Return a regular grid of points within `bounds` with the specified
+    resolution.
+
+    Parameters
+    ----------
+    bounds : 4-floats tuple
+        The bbox of the grid, as xmin, ymin, xmax, ymax.
+    resolution : int
+        The resolution to use, in the same unit as `bounds`
+
+    Returns
+    -------
+    points : numpy.array
+        An array of coordinates
+    shape : 2-floats tuple
+        The number of points on each dimension (width, height)
     """
-    xmin, ymin, xmax, ymax = bounds
-    nb_x = int(round((xmax - xmin) / reso + ((xmax - xmin) / reso) /10))
-    nb_y = int(round((ymax - ymin) / reso + ((ymax - ymin) / reso) /10))
-    try:
-        prog_x = \
-            [(xmin - (xmax - xmin) / 20) + reso * i for i in range(nb_x + 1)]
-        prog_y = \
-            [(ymin - (ymax - ymin) / 20) + reso * i for i in range(nb_y + 1)]
-    except ZeroDivisionError:
-        raise ZeroDivisionError(
-            'Please choose a finest resolution (by lowering the value of the '
-            'resolution argument and/or providing an appropriate mask layer')
-    print(len(prog_x) * len(prog_y))
-    if not skip_limit:            
-        if len(prog_x) * len(prog_y) > 500000:
-            raise ProbableMemoryError("Please choose a lower resolution"
-                                      " (by raising the value of the resolutio"
-                                      "n parameter)")
-    return (np.array([(x, y) for x in prog_x for y in prog_y]),
-            (len(prog_x), len(prog_y)))
+#    xmin, ymin, xmax, ymax = bounds
+    minlon, minlat, maxlon, maxlat = bounds
+    offset_lon = (maxlon - minlon) / 8
+    offset_lat = (maxlat - minlat) / 8
+    minlon -= offset_lon
+    maxlon += offset_lon
+    minlat -= offset_lat
+    maxlat += offset_lat
+
+    if longlat:
+        height = hav_dist(
+                np.array([(maxlon + minlon) / 2, minlat]),
+                np.array([(maxlon + minlon) / 2, maxlat])
+                )
+        width = hav_dist(
+                np.array([minlon, (maxlat + minlat) / 2]),
+                np.array([maxlon, (maxlat + minlat) / 2])
+                )
+    else:
+        height = np.linalg.norm(
+            np.array([(maxlon + minlon) / 2, minlat])
+            - np.array([(maxlon + minlon) / 2, maxlat]))
+        width = np.linalg.norm(
+            np.array([minlon, (maxlat + minlat) / 2])
+            - np.array([maxlon, (maxlat + minlat) / 2]))
+
+    nb_x = int(round(width / resolution))
+    nb_y = int(round(height / resolution))
+    if nb_y * 0.6 > nb_x:
+        nb_x = int(nb_x + nb_x / 3)
+    elif nb_x * 0.6 > nb_y:
+        nb_y = int(nb_y + nb_y / 3)
+        if nb_y * nb_x > 60000:
+            raise ProbableMemoryError(
+                "Please choose a lower resolution (by raising the value of the resolution parameter)")
+    return (
+        np.array([(x, y) for x in np.linspace(minlon, maxlon, nb_x) for y in np.linspace(minlat, maxlat, nb_y)]),
+        (nb_x, nb_y)
+        )
 
 
 class ProbableMemoryError(Exception):
     pass
 
+
 def render_stewart(polygons, pot_layer, levels, nb_class, mask_layer):
     data_provider = pot_layer.dataProvider()
     if mask_layer:
         features = []
-        mask_geom = [f.geometry() for f in mask_layer.getFeatures()][0]
+        geoms = [loads(f.geometry().asWkb()) for f in mask_layer.getFeatures()]
+        clip_geom = QgsGeometry.fromWkt(cascaded_union(geoms).wkt)
+
         for i, poly in enumerate(polygons):
-            geom = poly.intersection(mask_geom.buffer(0, 16))
+            geom = poly.intersection(clip_geom.buffer(0, 16))
+            if i == 0:
+                last_level = 0
+            else:
+                last_level = float(levels[i-1])
             if geom.area() > 0:
                 ft = QgsFeature()
                 ft.setGeometry(geom)
-                ft.setAttributes([i, float(levels[i]), float(levels[i+1])])
+                ft.setAttributes([i, last_level, float(levels[i])])
                 features.append(ft)
         data_provider.addFeatures(features[::-1])
 
     else:
         features = []
         for i, poly in enumerate(polygons):
+            if i == 0:
+                last_level = 0
+            else:
+                last_level = float(levels[i-1])
             ft = QgsFeature()
             ft.setGeometry(poly)
-            ft.setAttributes([i, float(levels[i]), float(levels[i+1])])
+            ft.setAttributes([i, last_level, float(levels[i])])
             features.append(ft)
         data_provider.addFeatures(features[::-1])
 
@@ -358,31 +446,6 @@ def render_stewart(polygons, pot_layer, levels, nb_class, mask_layer):
         symbol, colorRamp)
 
     return renderer
-
-
-def prepare_stewart(pot, unknownpts, nb_class, shape):
-    x = np.array([c[0] for c in unknownpts])
-    y = np.array([c[1] for c in unknownpts])
-    if not shape:
-        shape = (200,200)
-    xi = np.linspace(np.nanmin(x), np.nanmax(x), shape[0])
-    yi = np.linspace(np.nanmin(y), np.nanmax(y), shape[1])
-    zi = griddata(x, y, pot, xi, yi, interp='linear')
-    collec_poly = contourf(
-        xi, yi, zi, nb_class, vmax=abs(zi).max(), vmin=-abs(zi).max())
-    levels = [0] + [np.nanmax(pot)/i for i in xrange(1, nb_class+1)][::-1]
-    levels = collec_poly.levels[1:]
-    levels[-1] = np.nanmax(pot)
-    levels = levels.tolist()
-    res_poly = qgsgeom_from_mpl_collec(collec_poly.collections)
-    print('Nb poly : {}\n Levels :\n{}'.format(len(res_poly), levels))
-    if len(res_poly) - len(levels) == 2:
-        levels = [0, 0] + levels
-    elif len(res_poly) == len(levels):
-        levels = [0] + levels
-    else:
-        pass
-    return res_poly, levels
 
 
 def qgsgeom_from_mpl_collec(collections):

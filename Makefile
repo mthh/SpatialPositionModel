@@ -51,8 +51,7 @@ PY_FILES = \
 	SpatialPositionModel_utils.py
 
 UI_FILES = \
-	SpatialPositionModel_dialog_base.ui \
-	config_host.ui
+	SpatialPositionModel_dialog_base.ui
 
 EXTRAS = metadata.txt \
 	icon.png \
