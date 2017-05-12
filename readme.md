@@ -1,19 +1,13 @@
 SpatialPositionModel
 --------------------
 
-Partial python port of R SpatialPosition package.
+python port of "Stewart Potentials" method from [R SpatialPosition package](https://github.com/Groupe-ElementR/SpatialPosition).
 Original package (documentation and R source code) are available on [GitHub](https://github.com/Groupe-ElementR/SpatialPosition) or on the [CRAN](https://cran.r-project.org/web/packages/SpatialPosition/).
 
-Three models are implemented :
 
 **Stewart Potentials**  
 <img src="misc/stewart_screenshot.png" width="433" height="230">
 
-**Reilly catchment areas**  
-<img src="misc/reilly_screenshot.png" width="384" height="209">
-
-**Huff probabilistic catchment areas**  
-<img src="misc/huff_screenshot.png" width="411" height="207">
 
 #### Installation :
 This plugin hasn't been submitted on QGIS plugin repository yet.
