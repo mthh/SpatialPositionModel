@@ -217,7 +217,7 @@ def make_dist_mat(xy1, xy2, longlat=False):
     if not longlat:
         d0 = np.subtract.outer(xy1[:,0], xy2[:,0])
         d1 = np.subtract.outer(xy1[:,1], xy2[:,1])
-        return np.hypot(d0, d1)
+        return np.hypot(d0, d1) / 1000
     elif longlat:
         return hav_dist(xy1[:, None], xy2)
 
@@ -237,11 +237,6 @@ def compute_interact_density(matdist, typefun, beta, span):
 
 def gen_unknownpts(pts_layer, mask_layer, resolution, longlat):
     if mask_layer:
-        crs_mask = int(
-            mask_layer.dataProvider().crs().authid().split(':')[1])
-        assert int(pts_layer.dataProvider().crs().authid().split(':')[1]) \
-            == crs_mask
-
         ext = mask_layer.extent()
         bounds = (ext.xMinimum(), ext.yMinimum(),
                   ext.xMaximum(), ext.yMaximum())
@@ -311,32 +306,6 @@ def compute_huff(matopport):
     return matopportPct.max(axis=1)
 
 
-#def make_regular_points(bounds, reso, skip_limit=False, longlat=True):
-#    """
-#    Return a grid of regular points.
-#    """
-#    xmin, ymin, xmax, ymax = bounds
-#    nb_x = int(round((xmax - xmin) / reso + ((xmax - xmin) / reso) /10))
-#    nb_y = int(round((ymax - ymin) / reso + ((ymax - ymin) / reso) /10))
-#    try:
-#        prog_x = \
-#            [(xmin - (xmax - xmin) / 20) + reso * i for i in range(nb_x + 1)]
-#        prog_y = \
-#            [(ymin - (ymax - ymin) / 20) + reso * i for i in range(nb_y + 1)]
-#    except ZeroDivisionError:
-#        raise ZeroDivisionError(
-#            'Please choose a finest resolution (by lowering the value of the '
-#            'resolution argument and/or providing an appropriate mask layer')
-#    print(len(prog_x) * len(prog_y))
-#    if not skip_limit:            
-#        if len(prog_x) * len(prog_y) > 500000:
-#            raise ProbableMemoryError("Please choose a lower resolution"
-#                                      " (by raising the value of the resolutio"
-#                                      "n parameter)")
-#    return (np.array([(x, y) for x in prog_x for y in prog_y]),
-#            (len(prog_x), len(prog_y)))
-#
-
 def make_regular_points(bounds, resolution, longlat=True):
     """
     Return a regular grid of points within `bounds` with the specified
@@ -377,20 +346,23 @@ def make_regular_points(bounds, resolution, longlat=True):
     else:
         height = np.linalg.norm(
             np.array([(maxlon + minlon) / 2, minlat])
-            - np.array([(maxlon + minlon) / 2, maxlat]))
+            - np.array([(maxlon + minlon) / 2, maxlat])) / 1000
         width = np.linalg.norm(
             np.array([minlon, (maxlat + minlat) / 2])
-            - np.array([maxlon, (maxlat + minlat) / 2]))
+            - np.array([maxlon, (maxlat + minlat) / 2])) / 1000
 
     nb_x = int(round(width / resolution))
     nb_y = int(round(height / resolution))
+
     if nb_y * 0.6 > nb_x:
         nb_x = int(nb_x + nb_x / 3)
     elif nb_x * 0.6 > nb_y:
         nb_y = int(nb_y + nb_y / 3)
-        if nb_y * nb_x > 60000:
-            raise ProbableMemoryError(
-                "Please choose a lower resolution (by raising the value of the resolution parameter)")
+
+    if nb_y * nb_x > 200000:
+        print(nb_x, nb_y)
+        raise ProbableMemoryError(
+            "Please choose a lower resolution (by raising the value of the resolution parameter)")
     return (
         np.array([(x, y) for x in np.linspace(minlon, maxlon, nb_x) for y in np.linspace(minlat, maxlat, nb_y)]),
         (nb_x, nb_y)

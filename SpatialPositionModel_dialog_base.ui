@@ -72,6 +72,72 @@
      </item>
      <item row="6" column="0">
       <layout class="QGridLayout" name="gridLayout">
+       <item row="13" column="1" colspan="2">
+        <widget class="QgsFieldExpressionWidget" name="mFieldExpressionWidget">
+         <property name="filters">
+          <set>QgsFieldProxyModel::Numeric</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="2">
+        <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_span">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>250000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QComboBox" name="StewartcomboBox_function">
+         <item>
+          <property name="text">
+           <string>Exponential</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pareto</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_beta">
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="minimum">
+          <double>0.000100000000000</double>
+         </property>
+         <property name="maximum">
+          <double>100.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
        <item row="5" column="2">
         <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_resolution">
          <property name="decimals">
@@ -95,6 +161,19 @@
          </property>
         </widget>
        </item>
+       <item row="9" column="1">
+        <spacer name="verticalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
@@ -112,23 +191,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_beta">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="minimum">
-          <double>0.000100000000000</double>
-         </property>
-         <property name="maximum">
-          <double>100.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="1">
+       <item row="15" column="1">
         <widget class="QPushButton" name="StewartpushButton_clear">
          <property name="minimumSize">
           <size>
@@ -158,42 +221,6 @@
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Number of class&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
-       </item>
-       <item row="13" column="1" colspan="2">
-        <widget class="QgsFieldExpressionWidget" name="mFieldExpressionWidget">
-         <property name="filters">
-          <set>QgsFieldProxyModel::Numeric</set>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QDoubleSpinBox" name="StewartdoubleSpinBox_span">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="minimum">
-          <double>0.000100000000000</double>
-         </property>
-         <property name="maximum">
-          <double>250000.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_2">
@@ -228,33 +255,6 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QComboBox" name="StewartcomboBox_function">
-         <item>
-          <property name="text">
-           <string>Exponential</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Pareto</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <spacer name="verticalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="14" column="1" colspan="2">
         <widget class="QgsMapLayerComboBox" name="StewartComboBox_matdist">
          <property name="enabled">
@@ -265,16 +265,6 @@
          </property>
          <property name="filters">
           <set>QgsMapLayerProxyModel::NoGeometry|QgsMapLayerProxyModel::PluginLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="0" colspan="3" alignment="Qt::AlignRight">
-        <widget class="QCheckBox" name="checkBox_osrm">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Use OSRM to compute time-distance matrix (and define the span in seconds instead of map units)</string>
          </property>
         </widget>
        </item>
@@ -319,6 +309,19 @@
          </property>
         </widget>
        </item>
+       <item row="8" column="2">
+        <widget class="QSpinBox" name="StewartspinBox_class">
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <number>25</number>
+         </property>
+         <property name="value">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
        <item row="7" column="1">
         <widget class="QLabel" name="label_6">
          <property name="text">
@@ -333,19 +336,6 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="2">
-        <widget class="QSpinBox" name="StewartspinBox_class">
-         <property name="minimum">
-          <number>3</number>
-         </property>
-         <property name="maximum">
-          <number>25</number>
-         </property>
-         <property name="value">
-          <number>10</number>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="1">
         <widget class="QLabel" name="label_24">
          <property name="text">
@@ -354,7 +344,7 @@
         </widget>
        </item>
        <item row="16" column="1">
-        <spacer name="verticalSpacer_13">
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -371,633 +361,6 @@
     </layout>
    </widget>
    <widget class="QDialogButtonBox" name="buttonBox_close1">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>520</y>
-      <width>81</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Close</set>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QWidget" name="reilly">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <attribute name="title">
-    <string>Reilly catchment areas</string>
-   </attribute>
-   <widget class="QWidget" name="layoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>711</width>
-      <height>491</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="2" column="0">
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="6" column="1">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Span &lt;span style=&quot; font-size:10pt;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;map units&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="label_34">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Distance matrix (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Resolution &lt;span style=&quot; font-size:10pt;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;map units&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QgsFieldComboBox" name="ReillyComboBox_field">
-         <property name="filters">
-          <set>QgsFieldProxyModel::Numeric</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_pts">
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::PointLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_mask">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::LineLayer|QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PolygonLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Field name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QDoubleSpinBox" name="ReillydoubleSpinBox_span">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="minimum">
-          <double>0.000100000000000</double>
-         </property>
-         <property name="maximum">
-          <double>250000.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QDoubleSpinBox" name="ReillydoubleSpinBox_beta">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="minimum">
-          <double>0.000100000000000</double>
-         </property>
-         <property name="maximum">
-          <double>100.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QDoubleSpinBox" name="ReillydoubleSpinBox_resolution">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="minimum">
-          <double>0.000100000000000</double>
-         </property>
-         <property name="maximum">
-          <double>150000.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Mask layer (optionnal)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Point layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label_23">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Spatial interaction function&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_unknwPts">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="ReillyComboBox_matdist">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::NoGeometry|QgsMapLayerProxyModel::PluginLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_31">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Location of unknown points (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <spacer name="verticalSpacer_10">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="12" column="1">
-        <widget class="QPushButton" name="ReillypushButton_clear">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>23</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>23</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <italic>true</italic>
-          </font>
-         </property>
-         <property name="text">
-          <string>Clear the fields</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QComboBox" name="ReillycomboBox_function">
-         <item>
-          <property name="text">
-           <string>Exponential</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Pareto</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <spacer name="verticalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="7" column="0">
-      <spacer name="verticalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Reilly catchment areas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <spacer name="verticalSpacer_6">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="8" column="0">
-      <widget class="QPushButton" name="ReillypushButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Display the result</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QDialogButtonBox" name="buttonBox_close2">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>520</y>
-      <width>81</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Close</set>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QWidget" name="huff">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <attribute name="title">
-    <string>Huff probabilistic catchment areas</string>
-   </attribute>
-   <widget class="QWidget" name="layoutWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>711</width>
-      <height>491</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_5">
-     <item row="2" column="0">
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="10" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="HuffComboBox_matdist">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::NoGeometry|QgsMapLayerProxyModel::PluginLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QDoubleSpinBox" name="HuffdoubleSpinBox_span">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="minimum">
-          <double>0.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>250000.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QDoubleSpinBox" name="HuffdoubleSpinBox_beta">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="maximum">
-          <double>100.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QDoubleSpinBox" name="HuffdoubleSpinBox_resolution">
-         <property name="decimals">
-          <number>4</number>
-         </property>
-         <property name="minimum">
-          <double>0.000100000000000</double>
-         </property>
-         <property name="maximum">
-          <double>150000.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLabel" name="label_21">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Resolution&lt;span style=&quot; font-size:10pt;&quot;&gt; (&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;map units&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLabel" name="label_17">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QgsFieldComboBox" name="HuffComboBox_field">
-         <property name="filters">
-          <set>QgsFieldProxyModel::Numeric</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="HuffComboBox_mask">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::LineLayer|QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PolygonLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_20">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Mask layer (optionnal)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLabel" name="label_19">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Span &lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;(map units)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Point layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="HuffComboBox_pts">
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::PointLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_18">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Field name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QComboBox" name="HuffcomboBox_function">
-         <item>
-          <property name="text">
-           <string>Exponential</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Pareto</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label_22">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Spatial interaction function&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1" colspan="2">
-        <widget class="QgsMapLayerComboBox" name="HuffComboBox_unknwPts">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="currentIndex">
-          <number>-1</number>
-         </property>
-         <property name="filters">
-          <set>QgsMapLayerProxyModel::PluginLayer|QgsMapLayerProxyModel::PointLayer</set>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_33">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Location of unknown points (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_35">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Distance matrix (opt.)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <spacer name="verticalSpacer_11">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="11" column="1">
-        <widget class="QPushButton" name="HuffpushButton_clear">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>23</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>23</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <italic>true</italic>
-          </font>
-         </property>
-         <property name="text">
-          <string>Clear the fields</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <spacer name="verticalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Huff probabilistic catchment areas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <spacer name="verticalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="1" column="0">
-      <spacer name="verticalSpacer_8">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="6" column="0">
-      <widget class="QPushButton" name="HuffpushButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Display the result</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QDialogButtonBox" name="buttonBox_close3">
     <property name="geometry">
      <rect>
       <x>650</x>
@@ -1037,10 +400,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Resolution&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Resolution (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;in map units&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) of the regular grid the create (and resolution of the output raster for Reilly and Huff algorithms - overriden by the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; if provided for stewart's potentials).&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Span&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Distance (in map unit, or in the unit of the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Distance matrix&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; if provided) where the density of probability of the spatial interaction function equals 0.5.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Beta&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Impedance factor for the spatial interaction function.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Number of classes&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;only for stewart's potentials&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) Number of classes for the polygon shapefile to create.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;only for stewart's potentials - optionnal&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) The set of unknown points for which the function computes the estimates. Using an unknown points layer will override the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Resolution&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Custom expression&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;only for stewart's potentials - optionnal&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) An expression to compute and combine potentials on many variables. Only name of numeric fields and basic operators (&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;/&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) are allowed (so the expression should be looking like &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; font-weight:600;&quot;&gt;&amp;quot;gdppps2008&amp;quot; / &amp;quot;pop2008&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt;&quot;&gt;)&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. Using a custom expression will override the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Field name&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Distance matrix&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;only for stewart's potentials - optionnal - require a set of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) A distance matrix between the provided points of the layer given in &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; and in &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; fields.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Number of classes&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Number of classes for the polygon shapefile to create.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic; color:#d1d1d1;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#d1d1d1;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; The set of unknown points for which the function computes the estimates. Using an unknown points layer will override the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; color:#d1d1d1;&quot;&gt;Resolution&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Custom expression&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; An expression to compute and combine potentials on many variables. Only name of numeric fields and basic operators (&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;/&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) are allowed (so the expression should be looking like &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; font-weight:600;&quot;&gt;&amp;quot;gdppps2008&amp;quot; / &amp;quot;pop2008&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt;&quot;&gt;)&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. Using a custom expression will override the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Field name&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic; color:#d1d1d1;&quot;&gt;Distance matrix&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#d1d1d1;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; A distance matrix between the provided points of the layer given in &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; color:#d1d1d1;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; and in &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; color:#d1d1d1;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; fields.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;References&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; color:#000000;&quot;&gt;- COMMENGES H., GIRAUD T. (2015) &lt;/span&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/SpatialPosition/vignettes/SpatialPosition.html&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Introduction to the SpatialPosition package&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1132,34 +495,9 @@ p, li { white-space: pre-wrap; }
   <tabstop>StewartspinBox_class</tabstop>
   <tabstop>StewartComboBox_unknwPts</tabstop>
   <tabstop>StewartComboBox_matdist</tabstop>
-  <tabstop>checkBox_osrm</tabstop>
   <tabstop>StewartpushButton_clear</tabstop>
   <tabstop>StewartpushButton</tabstop>
   <tabstop>buttonBox_close1</tabstop>
-  <tabstop>ReillyComboBox_pts</tabstop>
-  <tabstop>ReillyComboBox_field</tabstop>
-  <tabstop>ReillyComboBox_mask</tabstop>
-  <tabstop>ReillycomboBox_function</tabstop>
-  <tabstop>ReillydoubleSpinBox_resolution</tabstop>
-  <tabstop>ReillydoubleSpinBox_span</tabstop>
-  <tabstop>ReillydoubleSpinBox_beta</tabstop>
-  <tabstop>ReillyComboBox_unknwPts</tabstop>
-  <tabstop>ReillyComboBox_matdist</tabstop>
-  <tabstop>ReillypushButton_clear</tabstop>
-  <tabstop>ReillypushButton</tabstop>
-  <tabstop>buttonBox_close2</tabstop>
-  <tabstop>HuffComboBox_pts</tabstop>
-  <tabstop>HuffComboBox_field</tabstop>
-  <tabstop>HuffComboBox_mask</tabstop>
-  <tabstop>HuffcomboBox_function</tabstop>
-  <tabstop>HuffdoubleSpinBox_resolution</tabstop>
-  <tabstop>HuffdoubleSpinBox_span</tabstop>
-  <tabstop>HuffdoubleSpinBox_beta</tabstop>
-  <tabstop>HuffComboBox_unknwPts</tabstop>
-  <tabstop>HuffComboBox_matdist</tabstop>
-  <tabstop>HuffpushButton_clear</tabstop>
-  <tabstop>HuffpushButton</tabstop>
-  <tabstop>buttonBox_close3</tabstop>
   <tabstop>textBrowser_2</tabstop>
   <tabstop>pushButton_data</tabstop>
  </tabstops>
