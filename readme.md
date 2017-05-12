@@ -1,12 +1,12 @@
 SpatialPositionModel
 --------------------
 
-python port of "Stewart Potentials" method from [R SpatialPosition package](https://github.com/Groupe-ElementR/SpatialPosition).
+Python port of "Stewart Potentials" method from [R SpatialPosition package](https://github.com/Groupe-ElementR/SpatialPosition).
 Original package (documentation and R source code) are available on [GitHub](https://github.com/Groupe-ElementR/SpatialPosition) or on the [CRAN](https://cran.r-project.org/web/packages/SpatialPosition/).
 
 
 **Stewart Potentials**  
-<img src="misc/stewart_screenshot.png" width="433" height="230">
+<img src="misc/stewart_screenshot.png" width="178" height="215">
 
 
 #### Installation :
