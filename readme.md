@@ -11,11 +11,22 @@ If you are only interested in computing potentials and drawing contour but not i
 
 #### Installation :
 This plugin hasn't been submitted on QGIS plugin repository yet.
-It can be installed like this :
+
+To use it, download the latest release (https://github.com/mthh/SpatialPositionModel/releases) and extract it in your QGIS plugin folder (usually something like $USER/.qgis2/python/plugins).
+Example on GNU/Linux :
 ```
-git clone https://github.com/mthh/SpatialPositionModel.git
-cd SpatialPositionModel
-make deploy
+wget https://github.com/mthh/SpatialPositionModel/files/1001419/SpatialPositionModel.zip
+unzip SpatialPositionModel.zip -d /home/$USER/.qgis/python/plugins
 ```
 
 The plugin is now installed and will be available to load in the plugin window of QGIS (think also to allow experimental plugins) under the name **SpatialPositionModel**.
+
+
+To contribute, clone this repository and use the various rules from the Makefile:
+
+```
+git clone https://github.com/mthh/SpatialPositionModel.git
+cd SpatialPositionModel
+make deploy 
+```
+
