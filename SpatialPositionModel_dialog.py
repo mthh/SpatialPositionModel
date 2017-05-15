@@ -173,12 +173,24 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         xi = np.linspace(np.nanmin(x), np.nanmax(x), shape[0])
         yi = np.linspace(np.nanmin(y), np.nanmax(y), shape[1])
 
-        collec_poly = contourf(
-            xi, yi,
-            pot.reshape((shape)).T,
-            class_breaks or nb_class,
-            vmax=abs(pot).max(),
-            vmin=-abs(pot).max())
+        if not class_breaks:
+            class_breaks = np.percentile(
+                pot, np.linspace(0.0, 100.0, nb_class + 1))
+        try:
+            collec_poly = contourf(
+                xi, yi,
+                pot.reshape((shape)).T,
+                class_breaks,
+                vmax=abs(pot).max(),
+                vmin=-abs(pot).max())
+        except:
+            collec_poly = contourf(
+                xi, yi,
+                pot.reshape((shape)).T,
+                nb_class,
+                vmax=abs(pot).max(),
+                vmin=-abs(pot).max())
+
         levels = collec_poly.levels[1:]
         levels[-1] = np.nanmax(pot)
         levels = levels.tolist()
