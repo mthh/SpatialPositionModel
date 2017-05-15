@@ -77,9 +77,10 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         bounds = (ext.xMinimum(), ext.yMinimum(),
                   ext.xMaximum(), ext.yMaximum())
         height, width = get_height_width(bounds, layer.crs().geographicFlag())
-        reso = ((height / 100) + (width / 100)) / 2
+        reso = max([(height / 90), (width / 90)])
+        reso += reso * 0.2
         self.StewartdoubleSpinBox_resolution.setValue(round(reso))
-        self.StewartdoubleSpinBox_span.setValue(round(reso * 2.2))
+        self.StewartdoubleSpinBox_span.setValue(round(reso * 2.5))
 
     def clear_stewart_fields(self):
         self.clean_fields()
