@@ -24,7 +24,7 @@ def parse_expression(expr):
                 if nexpr[-2] != ' ':
                     _ix = len(nexpr) - 1
                     nexpr.insert(_ix, ' ')
-                if expr[i+1] != ' ':
+                if expr[i + 1] != ' ':
                     nexpr.append(' ')
             except IndexError:
                 pass
@@ -108,9 +108,11 @@ def gen_unknownpts(pts_layer, mask_layer, resolution, longlat):
 
     return make_regular_points(bounds, resolution, longlat)
 
+
 def parse_class_breaks(class_breaks):
     try:
-        values = [float(i.strip().replace(',', '.')) for i in class_breaks.split('-')]
+        values = [float(i.strip().replace(',', '.'))
+                  for i in class_breaks.split('-')]
         last = -float('inf')
         for i in values:
             assert i > last
@@ -118,21 +120,6 @@ def parse_class_breaks(class_breaks):
         return values
     except:
         return None
-#def get_matdist_user(matdist, dim1, dim2):
-#    try:
-#        mat_dist = np.array([
-#             map(int, feat.attributes()[1:])
-#             for feat in matdist.getFeatures()
-#             ])
-#    except ValueError:
-#        mat_dist = np.array([
-#            map(float, feat.attributes()[1:])
-#            for feat in matdist.getFeatures()
-#            ])
-#    assert dim1 in mat_dist.shape \
-#        and dim2 in mat_dist.shape
-#    return mat_dist
-#
 
 
 def compute_opportunity(pts_values, matdens):
@@ -158,11 +145,11 @@ def get_height_width(bounds, longlat):
                 )
     else:
         height = np.linalg.norm(
-            np.array([(maxlon + minlon) / 2, minlat])
-            - np.array([(maxlon + minlon) / 2, maxlat])) / 1000
+            np.array([(maxlon + minlon) / 2, minlat]) -
+            np.array([(maxlon + minlon) / 2, maxlat])) / 1000
         width = np.linalg.norm(
-            np.array([minlon, (maxlat + minlat) / 2])
-            - np.array([maxlon, (maxlat + minlat) / 2])) / 1000
+            np.array([minlon, (maxlat + minlat) / 2]) -
+            np.array([maxlon, (maxlat + minlat) / 2])) / 1000
 
     return height, width
 
@@ -221,14 +208,16 @@ class ProbableMemoryError(Exception):
 def render_stewart(polygons, pot_layer, levels, nb_class, mask_layer):
     if mask_layer:
         try:
-            renderer = \
-                _render_stewart_mask(polygons, pot_layer, levels, nb_class, mask_layer)
+            renderer = _render_stewart_mask(
+                polygons, pot_layer, levels, nb_class, mask_layer)
             return (False, renderer)
         except:
-            renderer = _render_stewart(polygons, pot_layer, levels, nb_class)
+            renderer = _render_stewart(
+                polygons, pot_layer, levels, nb_class)
             return (True, renderer)
     else:
-        renderer = _render_stewart(polygons, pot_layer, levels, nb_class)
+        renderer = _render_stewart(
+            polygons, pot_layer, levels, nb_class)
         return (False, renderer)
 
 
@@ -244,7 +233,7 @@ def _render_stewart(polygons, pot_layer, levels, nb_class):
         if i == 0:
             last_level = 0
         else:
-            last_level = float(levels[i-1])
+            last_level = float(levels[i - 1])
         current_level = float(levels[i])
         ft = QgsFeature()
         ft.setGeometry(poly)
@@ -276,7 +265,7 @@ def _render_stewart_mask(polygons, pot_layer, levels, nb_class, mask_layer):
         if i == 0:
             last_level = 0
         else:
-            last_level = float(levels[i-1])
+            last_level = float(levels[i - 1])
         current_level = float(levels[i])
         if geom.area() > 0:
             ft = QgsFeature()
@@ -317,3 +306,19 @@ def qgsgeom_from_mpl_collec(collections):
         elif len(mpoly) == 1:
             polygons.append(QgsGeometry.fromPolygon(mpoly[0]))
     return polygons
+
+#def get_matdist_user(matdist, dim1, dim2):
+#    try:
+#        mat_dist = np.array([
+#             map(int, feat.attributes()[1:])
+#             for feat in matdist.getFeatures()
+#             ])
+#    except ValueError:
+#        mat_dist = np.array([
+#            map(float, feat.attributes()[1:])
+#            for feat in matdist.getFeatures()
+#            ])
+#    assert dim1 in mat_dist.shape \
+#        and dim2 in mat_dist.shape
+#    return mat_dist
+#

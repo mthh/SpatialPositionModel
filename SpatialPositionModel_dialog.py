@@ -4,11 +4,11 @@
  SpatialPositionModelDialog
                                  A QGIS plugin
  Compute spatial interaction models
-                             -------------------
-        begin                : 2015-12-10
+                              -------------------
+        begin                : 2017-05-15
         git sha              : $Format:%H$
-        copyright            : (C) 2015 by #H
-        email                : mth@#!.org
+        copyright            : (C) 2015 by mthh
+        email                : matthieu.viry@cnrs.fr
  ***************************************************************************/
 
 /***************************************************************************
@@ -200,24 +200,25 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.iface.setActiveLayer(pot_layer)
         self.iface.zoomToActiveLayer()
 
-    ## Todo : display better information/error message + show progression
+    # Todo : display better information/error message + show progression
     def display_log_error(self, error, msg_nb):
         error_msg = {
-#            1: "Error when loading the choosen matrix. See QGis log for error traceback.",
-            2: "The computation have been aborted, please choose a larger resolution value.",
+            2: ("The computation have been aborted, "
+                "please choose a larger resolution value."),
             3: "Error when generating the grid of unknownpts.",
             4: "Span, resolution and beta should not be set to 0.",
             5: "Crs mismatch between point and mask layers. Mask not used.",
             6: "Mask contains invalid geometries. Mask not used.",
-            7: "Unable to parse class breaks (levels must be increasing and sepated by a dash). Using default value of 7 class."
+            7: ("Unable to parse class breaks (levels must be increasing and "
+                "separated by a dash). Using default value of 7 class.")
             }
         QtGui.QMessageBox.information(
             self.iface.mainWindow(), 'Error', error_msg[msg_nb])
 
-
     def load_dataset(self):
-        home_path = \
-            os.getenv('HOMEPATH') or os.getenv('HOME') or os.getenv('USERPROFILE')
+        home_path = os.getenv('HOMEPATH') \
+            or os.getenv('HOME') \
+            or os.getenv('USERPROFILE')
         self.iface.addVectorLayer(os.sep.join(
             [home_path, '.qgis2', 'python', 'plugins', 'SpatialPositionModel',
              'test_data', 'paris_mask.geojson']),

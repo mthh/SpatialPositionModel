@@ -1,9 +1,9 @@
 SpatialPositionModel
 --------------------
 
-Python port of "Stewart Potentials" method from [R SpatialPosition package](https://github.com/Groupe-ElementR/SpatialPosition).
+Python port of "Stewart Potentials" method from [R SpatialPosition package](https://github.com/Groupe-ElementR/SpatialPosition) for [QGIS](http://qgis.org).
 Original package (documentation and R source code) are available on [GitHub](https://github.com/Groupe-ElementR/SpatialPosition) or on the [CRAN](https://cran.r-project.org/web/packages/SpatialPosition/).
-
+If you are only interested in computing potentials and drawing contour but not in QGIS, take a llo to the [smoomapy](https://pypi.python.org/pypi/smoomapy/) python package.
 
 **Stewart Potentials**  
 <img src="misc/stewart_screenshot.png" width="408.5" height="248.5">

@@ -5,10 +5,10 @@
                                  A QGIS plugin
  Compute spatial interaction models
                               -------------------
-        begin                : 2015-12-10
+        begin                : 2017-05-15
         git sha              : $Format:%H$
-        copyright            : (C) 2015 by #H
-        email                : mth@#!.org
+        copyright            : (C) 2015 by mthh
+        email                : matthieu.viry@cnrs.fr
  ***************************************************************************/
 
 /***************************************************************************
@@ -29,6 +29,7 @@ import resources
 from SpatialPositionModel_dialog import SpatialPositionModelDialog
 from .SpatialPositionModel_utils import *
 import os.path
+
 
 class SpatialPositionModel:
     """QGIS Plugin Implementation."""
@@ -83,7 +84,6 @@ class SpatialPositionModel:
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('SpatialPositionModel', message)
-
 
     def add_action(
         self,
@@ -167,7 +167,6 @@ class SpatialPositionModel:
             text=self.tr(u'SpatialPositionModel'),
             callback=self.run,
             parent=self.iface.mainWindow())
-
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""

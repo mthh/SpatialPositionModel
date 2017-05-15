@@ -8,9 +8,9 @@
 
 """
 
-__author__ = 'mth@#!.org'
+__author__ = 'matthieu.viry@cnrs.fr'
 __date__ = '2015-12-10'
-__copyright__ = 'Copyright 2015, #H'
+__copyright__ = 'Copyright 2015, mthh'
 
 import unittest
 
@@ -52,4 +52,3 @@ if __name__ == "__main__":
     suite = unittest.makeSuite(SpatialPositionModelDialogTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
-

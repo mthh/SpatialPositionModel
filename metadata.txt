@@ -1,7 +1,7 @@
-# This file contains metadata for your plugin. Since 
-# version 2.0 of QGIS this is the proper way to supply 
-# information about a plugin. The old method of 
-# embedding metadata in __init__.py will 
+# This file contains metadata for your plugin. Since
+# version 2.0 of QGIS this is the proper way to supply
+# information about a plugin. The old method of
+# embedding metadata in __init__.py will
 # is no longer supported since version 2.0.
 
 # This file should be included when you package your plugin.# Mandatory items:
@@ -11,13 +11,13 @@ name=SpatialPositionModel
 qgisMinimumVersion=2.8
 description=Compute spatial interaction models
 version=0.1
-author=#H
-email=mth@#!.org
+author=mthh
+email=matthieu.viry@cnrs.fr
 
-about=There are two main ways of modeling spatial interactions: the first one focuses on links between places (flows), the second one focuses on places and their influence at a distance. Following the physics metaphor, the flow may be seen as the gravitational force between two masses, the place influence as the gravitational potential. The SpatialPosition package, as its name suggests, proposes an implementation of place-based models: Stewart, Reilly and Huff models.
+about=There are two main ways of modeling spatial interactions: the first one focuses on links between places (flows), the second one focuses on places and their influence at a distance. Following the physics metaphor, the flow may be seen as the gravitational force between two masses, the place influence as the gravitational potential. This plugin proposes an implementation of a place-based model: Stewart potentials model.
 
-tracker= 
-repository= 
+tracker=
+repository=
 # End of mandatory metadata
 
 # Recommended items:
@@ -26,7 +26,7 @@ repository=
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=
+tags=Potentials,Accessibility,Spatial analysis
 
 homepage=
 category=Plugins
@@ -36,4 +36,3 @@ experimental=True
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
-
