@@ -15,7 +15,7 @@ This plugin hasn't been submitted on QGIS plugin repository yet.
 To use it, download the latest release (https://github.com/mthh/SpatialPositionModel/releases) and extract it in your QGIS plugin folder (usually something like $USER/.qgis2/python/plugins).
 Example on GNU/Linux :
 ```
-wget https://github.com/mthh/SpatialPositionModel/files/1001419/SpatialPositionModel.zip
+wget https://github.com/mthh/SpatialPositionModel/releases/download/v0.1.0-alpha/SpatialPositionModel.zip
 unzip SpatialPositionModel.zip -d /home/$USER/.qgis/python/plugins
 ```
 
