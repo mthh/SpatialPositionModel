@@ -6,8 +6,8 @@ Original package (documentation and R source code) are available on [GitHub](htt
 
 
 **Stewart Potentials**  
-<img src="misc/stewart_screenshot.png" width="178" height="215">
-
+<img src="misc/stewart_screenshot.png" width="408.5" height="248.5">
+<img src="misc/stewart_screenshot_menu.png" width="376.5" height="325">
 
 #### Installation :
 This plugin hasn't been submitted on QGIS plugin repository yet.

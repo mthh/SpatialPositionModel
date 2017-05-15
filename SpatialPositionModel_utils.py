@@ -108,6 +108,16 @@ def gen_unknownpts(pts_layer, mask_layer, resolution, longlat):
 
     return make_regular_points(bounds, resolution, longlat)
 
+def parse_class_breaks(class_breaks):
+    try:
+        values = [float(i.strip().replace(',', '.')) for i in class_breaks.split('-')]
+        last = -float('inf')
+        for i in values:
+            assert i > last
+            last = i
+        return values
+    except:
+        return None
 #def get_matdist_user(matdist, dim1, dim2):
 #    try:
 #        mat_dist = np.array([
@@ -132,6 +142,29 @@ def compute_opportunity(pts_values, matdens):
 
 def compute_potentials(matopport):
     return matopport.sum(axis=0)
+
+
+def get_height_width(bounds, longlat):
+    minlon, minlat, maxlon, maxlat = bounds
+
+    if longlat:
+        height = hav_dist(
+                np.array([(maxlon + minlon) / 2, minlat]),
+                np.array([(maxlon + minlon) / 2, maxlat])
+                )
+        width = hav_dist(
+                np.array([minlon, (maxlat + minlat) / 2]),
+                np.array([maxlon, (maxlat + minlat) / 2])
+                )
+    else:
+        height = np.linalg.norm(
+            np.array([(maxlon + minlon) / 2, minlat])
+            - np.array([(maxlon + minlon) / 2, maxlat])) / 1000
+        width = np.linalg.norm(
+            np.array([minlon, (maxlat + minlat) / 2])
+            - np.array([maxlon, (maxlat + minlat) / 2])) / 1000
+
+    return height, width
 
 
 def make_regular_points(bounds, resolution, longlat=True):
@@ -162,22 +195,7 @@ def make_regular_points(bounds, resolution, longlat=True):
     minlat -= offset_lat
     maxlat += offset_lat
 
-    if longlat:
-        height = hav_dist(
-                np.array([(maxlon + minlon) / 2, minlat]),
-                np.array([(maxlon + minlon) / 2, maxlat])
-                )
-        width = hav_dist(
-                np.array([minlon, (maxlat + minlat) / 2]),
-                np.array([maxlon, (maxlat + minlat) / 2])
-                )
-    else:
-        height = np.linalg.norm(
-            np.array([(maxlon + minlon) / 2, minlat])
-            - np.array([(maxlon + minlon) / 2, maxlat])) / 1000
-        width = np.linalg.norm(
-            np.array([minlon, (maxlat + minlat) / 2])
-            - np.array([maxlon, (maxlat + minlat) / 2])) / 1000
+    height, width = get_height_width((minlon, minlat, maxlon, maxlat), longlat)
 
     nb_x = int(round(width / resolution))
     nb_y = int(round(height / resolution))
@@ -212,7 +230,7 @@ def render_stewart(polygons, pot_layer, levels, nb_class, mask_layer):
     else:
         renderer = _render_stewart(polygons, pot_layer, levels, nb_class)
         return (False, renderer)
-        
+
 
 def _render_stewart(polygons, pot_layer, levels, nb_class):
     data_provider = pot_layer.dataProvider()
@@ -252,7 +270,7 @@ def _render_stewart_mask(polygons, pot_layer, levels, nb_class, mask_layer):
     features = []
     geoms = [loads(f.geometry().asWkb()) for f in mask_layer.getFeatures()]
     clip_geom = QgsGeometry.fromWkt(cascaded_union(geoms).wkt)
-    
+
     for i, poly in enumerate(polygons):
         geom = poly.intersection(clip_geom.buffer(0, 16))
         if i == 0:

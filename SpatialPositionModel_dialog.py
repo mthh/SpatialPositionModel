@@ -28,7 +28,9 @@ from qgis.core import *
 from .SpatialPositionModel_utils import (
     parse_expression, make_dist_mat, gen_unknownpts,
     compute_interact_density, compute_opportunity, compute_potentials,
-    render_stewart, ProbableMemoryError, qgsgeom_from_mpl_collec)
+    render_stewart, ProbableMemoryError, qgsgeom_from_mpl_collec,
+    parse_class_breaks, get_height_width
+    )
 from matplotlib.pyplot import contourf
 
 import os.path
@@ -46,19 +48,14 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.iface = iface
         self.host = None
         self.StewartComboBox_pts.layerChanged.connect(
-            lambda x: self.StewartComboBox_field.setLayer(x))
-        self.StewartComboBox_pts.layerChanged.connect(
-            lambda x: self.StewartpushButton.setEnabled(True)
-            if len(str(x)) > 0 else None)
-        self.StewartComboBox_pts.layerChanged.connect(
-            lambda x: self.mFieldExpressionWidget.setLayer(x))
+            lambda x: self.on_change_layer(x))
 
         self.StewartpushButton.clicked.connect(self.run_stewart)
         self.buttonBox_close1.clicked.connect(self.close)
         self.StewartpushButton_clear.clicked.connect(self.clear_stewart_fields)
         self.pushButton_data.clicked.connect(self.load_dataset)
 
-    def clean_name_factory(self, name):
+    def clean_fields(self):
         self.StewartComboBox_pts.setCurrentIndex(-1)
         self.StewartComboBox_mask.setCurrentIndex(-1)
         self.StewartComboBox_field.setCurrentIndex(-1)
@@ -68,20 +65,34 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.StewartdoubleSpinBox_beta.setValue(1.0)
         self.StewartdoubleSpinBox_span.setValue(1.0)
         self.StewartdoubleSpinBox_resolution.setValue(1.0)
+        self.StewarttextEdit_breaks.setPlainText("")
         self.StewartpushButton.setEnabled(False)
 
+    def on_change_layer(self, layer):
+        self.StewartComboBox_field.setLayer(layer)
+        self.StewartpushButton.setEnabled(True)
+        self.mFieldExpressionWidget.setLayer(layer)
+        layer = self.StewartComboBox_pts.currentLayer()
+        ext = layer.extent()
+        bounds = (ext.xMinimum(), ext.yMinimum(),
+                  ext.xMaximum(), ext.yMaximum())
+        height, width = get_height_width(bounds, layer.crs().geographicFlag())
+        reso = ((height / 100) + (width / 100)) / 2
+        self.StewartdoubleSpinBox_resolution.setValue(round(reso))
+        self.StewartdoubleSpinBox_span.setValue(round(reso * 2.2))
+
     def clear_stewart_fields(self):
-        self.clean_name_factory('Stewart')
+        self.clean_fields()
         self.StewartspinBox_class.setValue(10)
         self.mFieldExpressionWidget.setLayer(None)
 
     def run_stewart(self):
         pts_layer = self.StewartComboBox_pts.currentLayer()
         mask_layer = self.StewartComboBox_mask.currentLayer()
-#        unknownpts_layer = self.StewartComboBox_unknwPts.currentLayer()
         shape = None
-#        matdist = self.StewartComboBox_matdist.currentLayer()
         function = (self.StewartcomboBox_function.currentText()).lower()
+#        unknownpts_layer = self.StewartComboBox_unknwPts.currentLayer()
+#        matdist = self.StewartComboBox_matdist.currentLayer()
 
         self.crs = pts_layer.dataProvider().crs()
         self.longlat = self.crs.geographicFlag()
@@ -104,6 +115,17 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         span = self.StewartdoubleSpinBox_span.value()
         resolution = self.StewartdoubleSpinBox_resolution.value()
         nb_class = self.StewartspinBox_class.value()
+        class_breaks_txt = self.StewarttextEdit_breaks.toPlainText()
+
+        if len(class_breaks_txt) > 0:
+            class_breaks = parse_class_breaks(class_breaks_txt)
+            if class_breaks:
+                nb_class = len(class_breaks)
+            else:
+                nb_class = 7
+                self.display_log_error(None, 7)
+        else:
+            class_breaks = None
 
         if (resolution == 0) or (span == 0) or (beta == 0):
             self.display_log_error(None, 4)
@@ -153,7 +175,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         collec_poly = contourf(
             xi, yi,
             pot.reshape((shape)).T,
-            nb_class,
+            class_breaks or nb_class,
             vmax=abs(pot).max(),
             vmin=-abs(pot).max())
         levels = collec_poly.levels[1:]
@@ -185,13 +207,12 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             3: "Error when generating the grid of unknownpts.",
             4: "Span, resolution and beta should not be set to 0.",
             5: "Crs mismatch between point and mask layers. Mask not used.",
-            6: "Mask contains invalid geometries. Mask not used."
+            6: "Mask contains invalid geometries. Mask not used.",
+            7: "Unable to parse class breaks (levels must be increasing and sepated by a dash). Using default value of 7 class."
             }
         QtGui.QMessageBox.information(
             self.iface.mainWindow(), 'Error', error_msg[msg_nb])
-#        QgsMessageLog.logMessage(
-#            'SpatialPositionModel plugin error report :\n {}'.format(error),
-#            level=QgsMessageLog.WARNING)
+
 
     def load_dataset(self):
         home_path = \
