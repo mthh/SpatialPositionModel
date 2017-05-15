@@ -200,49 +200,69 @@ class ProbableMemoryError(Exception):
     pass
 
 
-
 def render_stewart(polygons, pot_layer, levels, nb_class, mask_layer):
+    if mask_layer:
+        try:
+            renderer = \
+                _render_stewart_mask(polygons, pot_layer, levels, nb_class, mask_layer)
+            return (False, renderer)
+        except:
+            renderer = _render_stewart(polygons, pot_layer, levels, nb_class)
+            return (True, renderer)
+    else:
+        renderer = _render_stewart(polygons, pot_layer, levels, nb_class)
+        return (False, renderer)
+        
+
+def _render_stewart(polygons, pot_layer, levels, nb_class):
     data_provider = pot_layer.dataProvider()
     colorRamp = QgsVectorGradientColorRampV2.create({
         'color1': '#ffffff',
         'color2': '#0037ff',
         'stops': '0.5;#72b2d7'})
     ranges = []
+    features = []
+    for i, poly in enumerate(polygons):
+        if i == 0:
+            last_level = 0
+        else:
+            last_level = float(levels[i-1])
+        current_level = float(levels[i])
+        ft = QgsFeature()
+        ft.setGeometry(poly)
+        ft.setAttributes([i, last_level, current_level])
+        features.append(ft)
+        symbol = QgsFillSymbolV2()
+        symbol.setColor(colorRamp.color(float(i) / len(polygons)))
+        label = "{} - {}".format(last_level, current_level)
+        rng = QgsRendererRangeV2(last_level, current_level, symbol, label)
+        ranges.append(rng)
+    data_provider.addFeatures(features[::-1])
+    renderer = QgsGraduatedSymbolRendererV2('level_max', ranges)
+    return renderer
 
-    if mask_layer:
-        features = []
-        geoms = [loads(f.geometry().asWkb()) for f in mask_layer.getFeatures()]
-        clip_geom = QgsGeometry.fromWkt(cascaded_union(geoms).wkt)
 
-        for i, poly in enumerate(polygons):
-            geom = poly.intersection(clip_geom.buffer(0, 16))
-            if i == 0:
-                last_level = 0
-            else:
-                last_level = float(levels[i-1])
-            current_level = float(levels[i])
-            if geom.area() > 0:
-                ft = QgsFeature()
-                ft.setGeometry(geom)
-                ft.setAttributes([i, last_level, current_level])
-                features.append(ft)
-                symbol = QgsFillSymbolV2()
-                symbol.setColor(colorRamp.color(float(i) / len(polygons)))
-                label = "{} - {}".format(last_level, current_level)
-                rng = QgsRendererRangeV2(last_level, current_level, symbol, label)
-                ranges.append(rng)
-        data_provider.addFeatures(features[::-1])
-
-    else:
-        features = []
-        for i, poly in enumerate(polygons):
-            if i == 0:
-                last_level = 0
-            else:
-                last_level = float(levels[i-1])
-            current_level = float(levels[i])
+def _render_stewart_mask(polygons, pot_layer, levels, nb_class, mask_layer):
+    data_provider = pot_layer.dataProvider()
+    colorRamp = QgsVectorGradientColorRampV2.create({
+        'color1': '#ffffff',
+        'color2': '#0037ff',
+        'stops': '0.5;#72b2d7'})
+    ranges = []
+    features = []
+    geoms = [loads(f.geometry().asWkb()) for f in mask_layer.getFeatures()]
+    clip_geom = QgsGeometry.fromWkt(cascaded_union(geoms).wkt)
+    
+    for i, poly in enumerate(polygons):
+        geom = poly.intersection(clip_geom.buffer(0, 16))
+        if i == 0:
+            last_level = 0
+        else:
+            last_level = float(levels[i-1])
+        current_level = float(levels[i])
+        if geom.area() > 0:
             ft = QgsFeature()
-            ft.setGeometry(poly)
+            ft.setGeometry(geom)
             ft.setAttributes([i, last_level, current_level])
             features.append(ft)
             symbol = QgsFillSymbolV2()
@@ -250,10 +270,8 @@ def render_stewart(polygons, pot_layer, levels, nb_class, mask_layer):
             label = "{} - {}".format(last_level, current_level)
             rng = QgsRendererRangeV2(last_level, current_level, symbol, label)
             ranges.append(rng)
-        data_provider.addFeatures(features[::-1])
-
+    data_provider.addFeatures(features[::-1])
     renderer = QgsGraduatedSymbolRendererV2('level_max', ranges)
-
     return renderer
 
 

@@ -106,7 +106,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         nb_class = self.StewartspinBox_class.value()
 
         if (resolution == 0) or (span == 0) or (beta == 0):
-            self.display_log_error(err, 4)
+            self.display_log_error(None, 4)
             return -1
 
         try:
@@ -167,10 +167,11 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             "&field=level_min:double"
             "&field=level_max:double".format(self.crs.authid()),
             "stewart_potentials_span_{}_beta_{}".format(span, beta), "memory")
-        renderer = render_stewart(
+        err, renderer = render_stewart(
             res_poly, pot_layer,
             levels, nb_class, mask_layer)
-
+        if err:
+            self.display_log_error(None, 6)
         pot_layer.setRendererV2(renderer)
         QgsMapLayerRegistry.instance().addMapLayer(pot_layer)
         self.iface.setActiveLayer(pot_layer)
@@ -183,13 +184,14 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             2: "The computation have been aborted, please choose a larger resolution value.",
             3: "Error when generating the grid of unknownpts.",
             4: "Span, resolution and beta should not be set to 0.",
-            5: "Crs mismatch between point and mask layers. Mask not used."
+            5: "Crs mismatch between point and mask layers. Mask not used.",
+            6: "Mask contains invalid geometries. Mask not used."
             }
         QtGui.QMessageBox.information(
             self.iface.mainWindow(), 'Error', error_msg[msg_nb])
-        QgsMessageLog.logMessage(
-            'SpatialPositionModel plugin error report :\n {}'.format(error),
-            level=QgsMessageLog.WARNING)
+#        QgsMessageLog.logMessage(
+#            'SpatialPositionModel plugin error report :\n {}'.format(error),
+#            level=QgsMessageLog.WARNING)
 
     def load_dataset(self):
         home_path = \
