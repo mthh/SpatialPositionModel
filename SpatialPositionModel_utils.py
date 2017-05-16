@@ -2,13 +2,19 @@
 """
 SpatialPositionModel Utils
 """
+import os
 import numpy as np
+from osgeo import gdal, osr
+from PyQt4.QtGui import QColor
 from qgis.core import (
     QgsGeometry, QgsPoint, QgsVectorGradientColorRampV2, QgsFeature,
-    QgsGraduatedSymbolRendererV2, QgsFillSymbolV2, QgsRendererRangeV2
-    )
+    QgsGraduatedSymbolRendererV2, QgsFillSymbolV2, QgsRendererRangeV2,
+    QgsRasterShader, QgsColorRampShader, QgsSingleBandPseudoColorRenderer,
+    QgsRasterBandStats)
 from shapely.wkb import loads
 from shapely.ops import cascaded_union
+from tempfile import mkdtemp
+from uuid import uuid4
 
 
 def parse_expression(expr):
@@ -280,6 +286,51 @@ def _render_stewart_mask(polygons, pot_layer, levels, nb_class, mask_layer):
     data_provider.addFeatures(features[::-1])
     renderer = QgsGraduatedSymbolRendererV2('level_max', ranges)
     return renderer
+
+
+def save_to_raster(pot, shape, bounds, proj4_value):
+    minlon, minlat, maxlon, maxlat = bounds
+    pixel_size_x = (maxlon - minlon) / shape[0]
+    pixel_size_y = (maxlat - minlat) / shape[1]
+    driver = gdal.GetDriverByName("GTiff")
+    folder = mkdtemp()
+    name = uuid4().hex
+    path = os.path.sep.join([folder, name + '.geotiff'])
+    dataset = driver.Create(path, shape[0], shape[1], 1, gdal.GDT_Float64)
+    srs = osr.SpatialReference()
+    srs.ImportFromProj4(proj4_value.encode("utf-8"))
+    dataset.SetProjection(srs.ExportToWkt())
+    dataset.SetGeoTransform(
+        (minlon, pixel_size_x, 0, minlat, 0, pixel_size_y))
+    dataset.GetRasterBand(1).WriteArray(pot.reshape((shape)).T)
+    dataset = None
+    return path
+
+
+def color_raster(layer):
+    provider = layer.dataProvider()
+    extent = layer.extent()
+    stats = provider.bandStatistics(1, QgsRasterBandStats.All, extent, 0)
+    value_range = stats.maximumValue - stats.minimumValue
+
+    value_list = [0] + [(value_range/i) for i in xrange(1, 5)][::-1]
+    color_ramp_items = [
+        QgsColorRampShader.ColorRampItem(value_list[0], QColor('#2c7bb6')),
+        QgsColorRampShader.ColorRampItem(value_list[1], QColor('#abd9e9')),
+        QgsColorRampShader.ColorRampItem(value_list[2], QColor('#ffffbf')),
+        QgsColorRampShader.ColorRampItem(value_list[3], QColor('#fdae61')),
+        QgsColorRampShader.ColorRampItem(value_list[4], QColor('#d7191c'))
+        ]
+
+    myRasterShader = QgsRasterShader()
+    myColorRamp = QgsColorRampShader()
+    myColorRamp.setColorRampItemList(color_ramp_items)
+    myColorRamp.setColorRampType(QgsColorRampShader.INTERPOLATED)
+    myRasterShader.setRasterShaderFunction(myColorRamp)
+    myPseudoRenderer = QgsSingleBandPseudoColorRenderer(
+        provider, layer.type(), myRasterShader)
+    layer.setRenderer(myPseudoRenderer)
+    layer.triggerRepaint()
 
 
 def qgsgeom_from_mpl_collec(collections):
