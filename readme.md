@@ -7,9 +7,10 @@ Original package (documentation and R source code) are available on [GitHub](htt
 If you are only interested in computing potentials and drawing contour but not in QGIS, take a look to the [smoomapy](https://pypi.python.org/pypi/smoomapy/) python package.
 
 **Stewart Potentials**  
-<img style="float:left;" src="misc/stewart_screenshot.png" width="340.4" height="207.1"/>
-<img style="float:right;" src="misc/stewart_screenshot_raster.png" width="340.4" height="207.1"/>
-<p align="center"><img src="misc/stewart_screenshot_menu.png" width="289.6" height="250"/></p>
+<img src="misc/stewart_screenshot.png" width="340.4" height="207.1"/>
+<img src="misc/stewart_screenshot_raster.png" width="340.4" height="207.1"/>
+<img align="center" src="misc/stewart_screenshot_menu.png" width="289.6" height="250"/>
+
 
 #### Installation :
 This plugin hasn't been submitted on QGIS plugin repository yet.
