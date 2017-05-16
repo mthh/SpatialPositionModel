@@ -313,7 +313,7 @@ def color_raster(layer):
     stats = provider.bandStatistics(1, QgsRasterBandStats.All, extent, 0)
     value_range = stats.maximumValue - stats.minimumValue
 
-    value_list = [0] + [(value_range/i) for i in xrange(1, 5)][::-1]
+    value_list = [0] + [(value_range / i) for i in xrange(1, 5)][::-1]
     color_ramp_items = [
         QgsColorRampShader.ColorRampItem(value_list[0], QColor('#2c7bb6')),
         QgsColorRampShader.ColorRampItem(value_list[1], QColor('#abd9e9')),

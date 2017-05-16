@@ -32,7 +32,6 @@ from .SpatialPositionModel_utils import (
     parse_class_breaks, get_height_width, save_to_raster, color_raster
     )
 from matplotlib.pyplot import contourf
-import time
 import os.path
 
 
@@ -81,18 +80,24 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
 
     def on_change_layer(self, layer):
         self.StewartComboBox_field.setLayer(layer)
-        self.StewartpushButton.setEnabled(True)
         self.mFieldExpressionWidget.setLayer(layer)
-        if not layer or not layer.extent():
-            return
-        ext = layer.extent()
-        bounds = (ext.xMinimum(), ext.yMinimum(),
-                  ext.xMaximum(), ext.yMaximum())
-        height, width = get_height_width(bounds, layer.dataProvider().crs().geographicFlag())
-        reso = max([(height / 90), (width / 90)])
-        reso += reso * 0.2
-        self.StewartdoubleSpinBox_resolution.setValue(round(reso))
-        self.StewartdoubleSpinBox_span.setValue(round(reso * 2.5))
+        if not layer or not layer.extent() \
+                or not layer.dataProvider() \
+                or not layer.dataProvider().crs():
+                return
+        try:
+            self.StewartpushButton.setEnabled(True)
+            ext = layer.extent()
+            bounds = (ext.xMinimum(), ext.yMinimum(),
+                      ext.xMaximum(), ext.yMaximum())
+            height, width = get_height_width(
+                bounds, layer.dataProvider().crs().geographicFlag())
+            reso = max([(height / 90), (width / 90)])
+            reso += reso * 0.2
+            self.StewartdoubleSpinBox_resolution.setValue(round(reso))
+            self.StewartdoubleSpinBox_span.setValue(round(reso * 2.5))
+        except TypeError:
+            pass
 
     def clear_stewart_fields(self):
         self.StewartComboBox_pts.setCurrentIndex(-1)
@@ -108,11 +113,12 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.StewartpushButton.setEnabled(False)
         self.StewartspinBox_class.setValue(7)
         self.mFieldExpressionWidget.setLayer(None)
-        self.radioButton_vector.setChecked()
+        self.radioButton_vector.setChecked(True)
 
     def run_stewart(self):
         pts_layer = self.StewartComboBox_pts.currentLayer()
-        mask_layer = self.StewartComboBox_mask.currentLayer()
+        mask_layer = self.StewartComboBox_mask.currentLayer() \
+            if self.radioButton_vector.isChecked() else None
         shape = None
         function = (self.StewartcomboBox_function.currentText()).lower()
 #        unknownpts_layer = self.StewartComboBox_unknwPts.currentLayer()
@@ -227,7 +233,8 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
                 "MultiPolygon?crs={}&field=id:integer"
                 "&field=level_min:double"
                 "&field=level_max:double".format(self.crs.authid()),
-                "stewart_potentials_span_{}_beta_{}".format(span, beta), "memory")
+                "stewart_potentials_span_{}_beta_{}".format(span, beta),
+                "memory")
             err, renderer = render_stewart(
                 res_poly, pot_layer,
                 levels, nb_class, mask_layer)
@@ -240,7 +247,8 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         else:
             bounds = (np.nanmin(x), np.nanmin(y), np.nanmax(x), np.nanmax(y))
             path = save_to_raster(pot, shape, bounds, self.crs.toProj4())
-            raster_layer = self.iface.addRasterLayer(path, "stewart_potentials_span_{}_beta_{}".format(span, beta))
+            raster_layer = self.iface.addRasterLayer(
+                path, "stewart_potentials_span_{}_beta_{}".format(span, beta))
             raster_layer.setCrs(self.crs)
         # color_raster(raster_layer)
 
