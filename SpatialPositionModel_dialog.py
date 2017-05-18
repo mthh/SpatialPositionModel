@@ -39,7 +39,7 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'SpatialPositionModel_dialog_base.ui'))
 
 
-class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
+class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
     def __init__(self, iface, parent=None):
         """Constructor."""
         super(SpatialPositionModelDialog, self).__init__(parent)
@@ -47,14 +47,20 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.iface = iface
 
         self.StewartComboBox_pts.layerChanged.connect(self.on_change_layer)
-        self.StewartpushButton.clicked.connect(self.run_stewart)
-        self.buttonBox_close1.clicked.connect(self.close)
         self.StewartpushButton_clear.clicked.connect(self.clear_stewart_fields)
         self.pushButton_data.clicked.connect(self.load_dataset)
         self.radioButton_vector.clicked.connect(
             lambda _: self.toggleVectorRaster('vector'))
         self.radioButton_raster.clicked.connect(
             lambda _: self.toggleVectorRaster('raster'))
+        self.clean_field.clicked.connect(
+                lambda: self.StewartComboBox_field.setCurrentIndex(-1))
+        self.clean_point_layer.clicked.connect(
+                lambda: self.StewartComboBox_pts.setCurrentIndex(-1))
+        self.clean_custom_expr.clicked.connect(
+                lambda: self.mFieldExpressionWidget.setField(None))
+        self.clean_mask_layer.clicked.connect(
+                lambda: self.StewartComboBox_mask.setCurrentIndex(-1))
 
     def toggleVectorRaster(self, value):
         if 'vector' in value:
@@ -84,9 +90,12 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         if not layer or not layer.extent() \
                 or not layer.dataProvider() \
                 or not layer.dataProvider().crs():
+                try:
+                    self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(False)
+                except: pass
                 return
         try:
-            self.StewartpushButton.setEnabled(True)
+            self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(True)
             ext = layer.extent()
             bounds = (ext.xMinimum(), ext.yMinimum(),
                       ext.xMaximum(), ext.yMaximum())
@@ -96,6 +105,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             reso += reso * 0.2
             self.StewartdoubleSpinBox_resolution.setValue(round(reso))
             self.StewartdoubleSpinBox_span.setValue(round(reso * 2.5))
+            self.StewartComboBox_mask.setCurrentIndex(-1)
         except TypeError:
             pass
 
@@ -110,10 +120,11 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.StewartdoubleSpinBox_span.setValue(1.0)
         self.StewartdoubleSpinBox_resolution.setValue(1.0)
         self.StewarttextEdit_breaks.setPlainText("")
-        self.StewartpushButton.setEnabled(False)
+        self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(False)
         self.StewartspinBox_class.setValue(7)
         self.mFieldExpressionWidget.setLayer(None)
         self.radioButton_vector.setChecked(True)
+        self.toggleVectorRaster('vector')
 
     def run_stewart(self):
         pts_layer = self.StewartComboBox_pts.currentLayer()
@@ -123,6 +134,12 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         function = (self.StewartcomboBox_function.currentText()).lower()
 #        unknownpts_layer = self.StewartComboBox_unknwPts.currentLayer()
 #        matdist = self.StewartComboBox_matdist.currentLayer()
+
+        progressMessageBar = self.iface.messageBar().createMessage("Processing...")
+        progress = QtGui.QProgressBar()
+        progress.setMaximum(10)
+        progressMessageBar.layout().addWidget(progress)
+        self.iface.messageBar().pushWidget(progressMessageBar, self.iface.messageBar().INFO)
 
         self.crs = pts_layer.dataProvider().crs()
         self.longlat = self.crs.geographicFlag()
@@ -144,6 +161,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         beta = self.StewartdoubleSpinBox_beta.value()
         span = self.StewartdoubleSpinBox_span.value()
         resolution = self.StewartdoubleSpinBox_resolution.value()
+        progress.setValue(1)
 
         try:
             shape, unknownpts = \
@@ -155,9 +173,9 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         except Exception as er:
             self.display_log_error(er, 3)
             return -1
-
+        progress.setValue(2)
         mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
-
+        progress.setValue(3)
         if not other_values_fields[0]:
             if pts_values_field:
                 pts_values = np.array(
@@ -165,21 +183,29 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
                      for f in pts_layer.getFeatures()])
             else:
                 pts_values = np.array([1 for i in xrange(len(pts_coords))])
+            progress.setValue(3.5)
             mat_dens = compute_interact_density(mat_dist, function, beta, span)
+            progress.setValue(4.5)
             pot = compute_potentials(compute_opportunity(pts_values, mat_dens))
-
+            progress.setValue(6.6)
         else:
             fields, operator = parse_expression(other_values_fields[0])
+            progress.setValue(3.5)
             mat_dens = compute_interact_density(mat_dist, function, beta, span)
             pts_values1 = np.array(
                 [f.attribute(fields[0]) for f in pts_layer.getFeatures()])
             pts_values2 = np.array(
                 [f.attribute(fields[1]) for f in pts_layer.getFeatures()])
+            progress.setValue(4)
             mat_opport1 = compute_opportunity(pts_values1, mat_dens)
             mat_opport2 = compute_opportunity(pts_values2, mat_dens)
+            progress.setValue(4.5)
             pot1 = compute_potentials(mat_opport1)
+            progress.setValue(5)
             pot2 = compute_potentials(mat_opport2)
+            progress.setValue(6)
             pot = operator(pot1, pot2)
+            progress.setValue(6.6)
 
         x = np.array(list(set([c[0] for c in unknownpts])))
         y = np.array(list(set([c[1] for c in unknownpts])))
@@ -201,7 +227,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             if (resolution == 0) or (span == 0) or (beta == 0):
                 self.display_log_error(None, 4)
                 return -1
-
+            progress.setValue(7.5)
             xi = np.linspace(np.nanmin(x), np.nanmax(x), shape[0])
             yi = np.linspace(np.nanmin(y), np.nanmax(y), shape[1])
 
@@ -228,7 +254,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             levels = levels.tolist()
 
             res_poly = qgsgeom_from_mpl_collec(collec_poly.collections)
-
+            progress.setValue(8.5)
             pot_layer = QgsVectorLayer(
                 "MultiPolygon?crs={}&field=id:integer"
                 "&field=level_min:double"
@@ -241,18 +267,23 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             if err:
                 self.display_log_error(None, 6)
             pot_layer.setRendererV2(renderer)
+            progress.setValue(9)
             QgsMapLayerRegistry.instance().addMapLayer(pot_layer)
             self.iface.setActiveLayer(pot_layer)
+            progress.setValue(10)
             self.iface.zoomToActiveLayer()
         else:
+            progress.setValue(7)
             bounds = (np.nanmin(x), np.nanmin(y), np.nanmax(x), np.nanmax(y))
             path = save_to_raster(pot, shape, bounds, self.crs.toProj4())
+            progress.setValue(9)
             raster_layer = self.iface.addRasterLayer(
                 path, "stewart_potentials_span_{}_beta_{}".format(span, beta))
             raster_layer.setCrs(self.crs)
+            progress.setValue(10)
         # color_raster(raster_layer)
+        self.iface.messageBar().clearWidgets()
 
-    # Todo : display better information/error message + show progression
     def display_log_error(self, error, msg_nb):
         error_msg = {
             2: ("The computation have been aborted, "
@@ -266,6 +297,7 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
             }
         QtGui.QMessageBox.information(
             self.iface.mainWindow(), 'Error', error_msg[msg_nb])
+        self.iface.messageBar().clearWidgets()
 
     def load_dataset(self):
         home_path = os.getenv('HOMEPATH') \
@@ -297,4 +329,5 @@ class SpatialPositionModelDialog(QtGui.QTabWidget, FORM_CLASS):
         self.StewartdoubleSpinBox_span.setValue(1.250)
         self.StewartdoubleSpinBox_resolution.setValue(0.100)
         self.StewarttextEdit_breaks.setPlainText("")
-        self.StewartpushButton.setEnabled(True)
+        self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(False)
+

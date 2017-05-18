@@ -182,3 +182,7 @@ class SpatialPositionModel:
         """Run method that performs all the real work"""
         # show the dialog
         self.dlg.show()
+        result = self.dlg.exec_()
+        # See if OK was pressed
+        if result == 1:
+            self.dlg.run_stewart()
