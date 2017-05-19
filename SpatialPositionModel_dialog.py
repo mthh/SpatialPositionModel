@@ -23,7 +23,8 @@
 
 import os
 import numpy as np
-from PyQt4 import QtGui, uic
+from PyQt4 import uic
+from PyQt4.QtGui import QDialog, QDialogButtonBox, QProgressBar, QMessageBox
 from qgis.core import *
 from .SpatialPositionModel_utils import (
     parse_expression, make_dist_mat, gen_unknownpts,
@@ -39,13 +40,12 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'SpatialPositionModel_dialog_base.ui'))
 
 
-class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
+class SpatialPositionModelDialog(QDialog, FORM_CLASS):
     def __init__(self, iface, parent=None):
         """Constructor."""
         super(SpatialPositionModelDialog, self).__init__(parent)
-        self.setupUi(self)
         self.iface = iface
-
+        self.setupUi(self)
         self.StewartComboBox_pts.layerChanged.connect(self.on_change_layer)
         self.StewartpushButton_clear.clicked.connect(self.clear_stewart_fields)
         self.pushButton_data.clicked.connect(self.load_dataset)
@@ -54,13 +54,13 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
         self.radioButton_raster.clicked.connect(
             lambda _: self.toggleVectorRaster('raster'))
         self.clean_field.clicked.connect(
-                lambda: self.StewartComboBox_field.setCurrentIndex(-1))
+            lambda: self.StewartComboBox_field.setCurrentIndex(-1))
         self.clean_point_layer.clicked.connect(
-                lambda: self.StewartComboBox_pts.setCurrentIndex(-1))
+            lambda: self.StewartComboBox_pts.setCurrentIndex(-1))
         self.clean_custom_expr.clicked.connect(
-                lambda: self.mFieldExpressionWidget.setField(None))
+            lambda: self.mFieldExpressionWidget.setField(None))
         self.clean_mask_layer.clicked.connect(
-                lambda: self.StewartComboBox_mask.setCurrentIndex(-1))
+            lambda: self.StewartComboBox_mask.setCurrentIndex(-1))
 
     def toggleVectorRaster(self, value):
         if 'vector' in value:
@@ -70,6 +70,7 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
             self.StewarttextEdit_breaks.setVisible(True)
             self.StewartspinBox_class.setVisible(True)
             self.StewartComboBox_mask.setVisible(True)
+            self.clean_mask_layer.setVisible(True)
             self.label_25.setVisible(True)
             self.label_38.setVisible(True)
             self.label_3.setVisible(True)
@@ -80,6 +81,7 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
             self.StewarttextEdit_breaks.setVisible(False)
             self.StewartspinBox_class.setVisible(False)
             self.StewartComboBox_mask.setVisible(False)
+            self.clean_mask_layer.setVisible(False)
             self.label_25.setVisible(False)
             self.label_38.setVisible(False)
             self.label_3.setVisible(False)
@@ -90,12 +92,12 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
         if not layer or not layer.extent() \
                 or not layer.dataProvider() \
                 or not layer.dataProvider().crs():
-                try:
-                    self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(False)
-                except: pass
+            if not QDialogButtonBox:
                 return
+            else:
+                self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
         try:
-            self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(True)
+            self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
             ext = layer.extent()
             bounds = (ext.xMinimum(), ext.yMinimum(),
                       ext.xMaximum(), ext.yMaximum())
@@ -106,7 +108,7 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
             self.StewartdoubleSpinBox_resolution.setValue(round(reso))
             self.StewartdoubleSpinBox_span.setValue(round(reso * 2.5))
             self.StewartComboBox_mask.setCurrentIndex(-1)
-        except TypeError:
+        except:
             pass
 
     def clear_stewart_fields(self):
@@ -120,7 +122,7 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
         self.StewartdoubleSpinBox_span.setValue(1.0)
         self.StewartdoubleSpinBox_resolution.setValue(1.0)
         self.StewarttextEdit_breaks.setPlainText("")
-        self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(False)
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
         self.StewartspinBox_class.setValue(7)
         self.mFieldExpressionWidget.setLayer(None)
         self.radioButton_vector.setChecked(True)
@@ -136,7 +138,7 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
 #        matdist = self.StewartComboBox_matdist.currentLayer()
 
         progressMessageBar = self.iface.messageBar().createMessage("Processing...")
-        progress = QtGui.QProgressBar()
+        progress = QProgressBar()
         progress.setMaximum(10)
         progressMessageBar.layout().addWidget(progress)
         self.iface.messageBar().pushWidget(progressMessageBar, self.iface.messageBar().INFO)
@@ -295,7 +297,7 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
             7: ("Unable to parse class breaks (levels must be increasing and "
                 "separated by a dash). Using default value of 7 class.")
             }
-        QtGui.QMessageBox.information(
+        QMessageBox.information(
             self.iface.mainWindow(), 'Error', error_msg[msg_nb])
         self.iface.messageBar().clearWidgets()
 
@@ -311,7 +313,7 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
             [home_path, '.qgis2', 'python', 'plugins', 'SpatialPositionModel',
              'test_data', 'paris_hospitals.geojson']),
             'paris_hospitals', 'ogr')
-        QtGui.QMessageBox.information(
+        QMessageBox.information(
             self.iface.mainWindow(), 'Dataset loaded',
             "Set these values and give a first try to the plug-in:\n\n"
             "Point layer = \"paris_hospitals\"\n"
@@ -329,5 +331,4 @@ class SpatialPositionModelDialog(QtGui.QDialog, FORM_CLASS):
         self.StewartdoubleSpinBox_span.setValue(1.250)
         self.StewartdoubleSpinBox_resolution.setValue(0.100)
         self.StewarttextEdit_breaks.setPlainText("")
-        self.button_box.button(QtGui.QDialogButtonBox.Ok).setEnabled(False)
-
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
