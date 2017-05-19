@@ -22,6 +22,11 @@
      <height>621</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <stylestrategy>PreferDefault</stylestrategy>
+    </font>
+   </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
@@ -291,7 +296,13 @@
            </font>
           </property>
           <property name="text">
-           <string>🗑</string>
+           <string notr="true"/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -306,7 +317,13 @@
            </font>
           </property>
           <property name="text">
-           <string>🗑</string>
+           <string notr="true"/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -320,7 +337,13 @@
            </font>
           </property>
           <property name="text">
-           <string>🗑</string>
+           <string/>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -341,7 +364,7 @@
        <x>20</x>
        <y>390</y>
        <width>711</width>
-       <height>141</height>
+       <height>149</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
@@ -413,6 +436,12 @@
       </item>
       <item row="1" column="1">
        <widget class="QToolButton" name="clean_mask_layer">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <family>Monospace</family>
@@ -422,7 +451,16 @@
          </font>
         </property>
         <property name="text">
-         <string>🗑</string>
+         <string notr="true"/>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -505,21 +543,21 @@
       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:600; text-decoration: underline;&quot;&gt;Usage&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; The set of known observations to estimate the potentials from.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Field name&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; Name of the variable from &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; from which potentials are computed (quantitative variable without negative values). If no one is selected, 1 is used for each observation of &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Mask layer&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; (&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;optional&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;) The spatial extent of this object is used to create the regularly spaced grid of point and the output will be cropped by it shape.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Spatial interaction function&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; The spatial interaction function to use. Options are &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;pareto&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;&amp;quot; (means power law) or &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;exponential&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;&amp;quot;. If &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;pareto&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;&amp;quot; the interaction is defined as: &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-weight:600;&quot;&gt;(1 + alpha * mDistance) ^ (-beta)&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;. If &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;exponential&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;&amp;quot; the interaction is defined as: &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-weight:600;&quot;&gt;exp(- alpha * mDistance ^ beta)&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;. The alpha parameter is computed from parameters given by the user (&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;beta&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;span&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Resolution&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; Resolution (&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;in map units&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;) of the regular grid the create (and resolution of the output raster for Reilly and Huff algorithms - overriden by the &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; if provided for stewart's potentials).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Span&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; Distance (in map unit, or in the unit of the &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;Distance matrix&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; if provided) where the density of probability of the spatial interaction function equals 0.5.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Beta&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; Impedance factor for the spatial interaction function.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Number of classes&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; Number of classes for the polygon shapefile to create.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic; color:#d1d1d1;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; color:#d1d1d1;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; color:#d1d1d1;&quot;&gt; The set of unknown points for which the function computes the estimates. Using an unknown points layer will override the &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic; color:#d1d1d1;&quot;&gt;Resolution&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; color:#d1d1d1;&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic;&quot;&gt;Custom expression&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; An expression to compute and combine potentials on many variables. Only name of numeric fields and basic operators (&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt; font-weight:600;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt; font-weight:600;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt; font-weight:600;&quot;&gt;/&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt; font-weight:600;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;) are allowed (so the expression should be looking like &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; font-weight:600;&quot;&gt;&amp;quot;gdppps2008&amp;quot; / &amp;quot;pop2008&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt;&quot;&gt;)&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;. Using a custom expression will override the &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;Field name&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; font-style:italic; color:#d1d1d1;&quot;&gt;Distance matrix&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600; color:#d1d1d1;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; color:#d1d1d1;&quot;&gt; A distance matrix between the provided points of the layer given in &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic; color:#d1d1d1;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; color:#d1d1d1;&quot;&gt; and in &lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic; color:#d1d1d1;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; color:#d1d1d1;&quot;&gt; fields.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:600; text-decoration: underline;&quot;&gt;References&lt;/span&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Usage&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; The set of known observations to estimate the potentials from.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Field name&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Name of the variable from &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; from which potentials are computed (quantitative variable without negative values). If no one is selected, 1 is used for each observation of &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Mask layer&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;optional&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) The spatial extent of this object is used to create the regularly spaced grid of point and the output will be cropped by it shape.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Spatial interaction function&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; The spatial interaction function to use. Options are &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;pareto&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&amp;quot; (means power law) or &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;exponential&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&amp;quot;. If &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;pareto&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&amp;quot; the interaction is defined as: &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:9pt; font-weight:600;&quot;&gt;(1 + alpha * mDistance) ^ (-beta)&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. If &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;exponential&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&amp;quot; the interaction is defined as: &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:9pt; font-weight:600;&quot;&gt;exp(- alpha * mDistance ^ beta)&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. The alpha parameter is computed from parameters given by the user (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;beta&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;span&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Resolution&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Resolution (&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;in map units&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) of the regular grid the create (and resolution of the output raster for Reilly and Huff algorithms - overriden by the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; if provided for stewart's potentials).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Span&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Distance (in map unit, or in the unit of the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Distance matrix&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; if provided) where the density of probability of the spatial interaction function equals 0.5.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Beta&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Impedance factor for the spatial interaction function.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Number of classes&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; Number of classes for the polygon shapefile to create.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic; color:#d1d1d1;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#d1d1d1;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; The set of unknown points for which the function computes the estimates. Using an unknown points layer will override the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; color:#d1d1d1;&quot;&gt;Resolution&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;Custom expression&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; An expression to compute and combine potentials on many variables. Only name of numeric fields and basic operators (&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;/&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;) are allowed (so the expression should be looking like &lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; font-weight:600;&quot;&gt;&amp;quot;gdppps2008&amp;quot; / &amp;quot;pop2008&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt;&quot;&gt;)&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. Using a custom expression will override the &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;Field name&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; parameter.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic; color:#d1d1d1;&quot;&gt;Distance matrix&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#d1d1d1;&quot;&gt; :&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; A distance matrix between the provided points of the layer given in &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; color:#d1d1d1;&quot;&gt;Point layer&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; and in &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; color:#d1d1d1;&quot;&gt;Location of unknown points&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#d1d1d1;&quot;&gt; fields.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;References&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; color:#000000;&quot;&gt;- COMMENGES H., GIRAUD T. (2015) &lt;/span&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/SpatialPosition/vignettes/SpatialPosition.html&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Introduction to the SpatialPosition package&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; color:#000000;&quot;&gt;- HUFF D. (1964) Defining and Estimating a Trading Area. Journal of Marketing, 28: 34-38.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:7px; margin-bottom:7px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:8pt; color:#000000;&quot;&gt;- REILLY, W. J. (1931) The law of retail gravitation, W. J. Reilly, New York.&lt;/span&gt;&lt;/p&gt;

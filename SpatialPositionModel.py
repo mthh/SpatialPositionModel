@@ -182,8 +182,8 @@ class SpatialPositionModel:
         """Run method that performs all the real work"""
         # show the dialog
         self.dlg.show()
-        self.dlg.StewartComboBox_pts.setCurrentIndex(-1)
-        self.dlg.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
+        if self.dlg.StewartComboBox_pts.currentIndex() == -1:
+            self.dlg.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
         result = self.dlg.exec_()
         # See if OK was pressed
         if result == 1:
