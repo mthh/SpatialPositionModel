@@ -176,15 +176,24 @@ class SpatialPositionModelDialog(QDialog, FORM_CLASS):
             self.display_log_error(er, 3)
             return -1
         progress.setValue(2)
-        mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
-        progress.setValue(3)
+
         if not other_values_fields[0]:
             if pts_values_field:
-                pts_values = np.array(
-                    [f.attribute(pts_values_field)
-                     for f in pts_layer.getFeatures()])
+                pts_coords = []
+                pts_values = []
+                for f in pts_layer.getFeatures():
+                    val = f.attribute(pts_values_field)
+                    if val:
+                        pts_coords.append(f.geometry().asPoint())
+                        pts_values.append(val)
+                pts_coords = np.array(pts_coords)
+                pts_values = np.array(pts_values)
             else:
+                pts_coords = np.array(
+                    [f.geometry().asPoint() for f in pts_layer.getFeatures()])
                 pts_values = np.array([1 for i in xrange(len(pts_coords))])
+            progress.setValue(2.5)
+            mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
             progress.setValue(3.5)
             mat_dens = compute_interact_density(mat_dist, function, beta, span)
             progress.setValue(4.5)
@@ -192,12 +201,23 @@ class SpatialPositionModelDialog(QDialog, FORM_CLASS):
             progress.setValue(6.6)
         else:
             fields, operator = parse_expression(other_values_fields[0])
-            progress.setValue(3.5)
+            progress.setValue(2.5)
+            pts_coords = []
+            pts_values1 = []
+            pts_values2 = []
+            for f in pts_layer.getFeatures():
+                val1 = f.attribute(fields[0])
+                val2 = f.attribute(fields[1])
+                if val1 and val2:
+                    pts_coords.append(f.geometry().asPoint())
+                    pts_values1.append(val1)
+                    pts_values2.append(val2)
+            pts_coords = np.array(pts_coords)
+            pts_values1 = np.array(pts_values1)
+            pts_values2 = np.array(pts_values2)
+            mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
+            progress.setValue(3)
             mat_dens = compute_interact_density(mat_dist, function, beta, span)
-            pts_values1 = np.array(
-                [f.attribute(fields[0]) for f in pts_layer.getFeatures()])
-            pts_values2 = np.array(
-                [f.attribute(fields[1]) for f in pts_layer.getFeatures()])
             progress.setValue(4)
             mat_opport1 = compute_opportunity(pts_values1, mat_dens)
             mat_opport2 = compute_opportunity(pts_values2, mat_dens)
