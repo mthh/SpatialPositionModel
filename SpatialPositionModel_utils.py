@@ -105,10 +105,12 @@ def compute_interact_density(matdist, typefun, beta, span):
 
 def gen_unknownpts(pts_layer, mask_layer, resolution, longlat):
     if mask_layer:
+        offset = False
         ext = mask_layer.extent()
         bounds = (ext.xMinimum(), ext.yMinimum(),
                   ext.xMaximum(), ext.yMaximum())
     else:
+        offset = True
         ext = pts_layer.extent()
         bounds = (ext.xMinimum(), ext.yMinimum(),
                   ext.xMaximum(), ext.yMaximum())
@@ -116,7 +118,7 @@ def gen_unknownpts(pts_layer, mask_layer, resolution, longlat):
         bounds = (bounds[0] - tmp, bounds[1] - tmp,
                   bounds[2] + tmp, bounds[3] + tmp)
 
-    return make_regular_points(bounds, resolution, longlat)
+    return make_regular_points(bounds, resolution, longlat, offset)
 
 
 def parse_class_breaks(class_breaks):
@@ -164,7 +166,7 @@ def get_height_width(bounds, longlat):
     return height, width
 
 
-def make_regular_points(bounds, resolution, longlat=True):
+def make_regular_points(bounds, resolution, longlat=True, offset=True):
     """
     Return a regular grid of points within `bounds` with the specified
     resolution.
@@ -185,12 +187,13 @@ def make_regular_points(bounds, resolution, longlat=True):
     """
 #    xmin, ymin, xmax, ymax = bounds
     minlon, minlat, maxlon, maxlat = bounds
-    offset_lon = (maxlon - minlon) / 8
-    offset_lat = (maxlat - minlat) / 8
-    minlon -= offset_lon
-    maxlon += offset_lon
-    minlat -= offset_lat
-    maxlat += offset_lat
+    if offset:
+        offset_lon = (maxlon - minlon) / 8
+        offset_lat = (maxlat - minlat) / 8
+        minlon -= offset_lon
+        maxlon += offset_lon
+        minlat -= offset_lat
+        maxlat += offset_lat
 
     height, width = get_height_width((minlon, minlat, maxlon, maxlat), longlat)
 

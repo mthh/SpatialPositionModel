@@ -66,25 +66,17 @@ class SpatialPositionModelDialog(QDialog, FORM_CLASS):
         if 'vector' in value:
             self.StewarttextEdit_breaks.setEnabled(True)
             self.StewartspinBox_class.setEnabled(True)
-            self.StewartComboBox_mask.setEnabled(True)
             self.StewarttextEdit_breaks.setVisible(True)
             self.StewartspinBox_class.setVisible(True)
-            self.StewartComboBox_mask.setVisible(True)
-            self.clean_mask_layer.setVisible(True)
             self.label_25.setVisible(True)
             self.label_38.setVisible(True)
-            self.label_3.setVisible(True)
         else:
             self.StewarttextEdit_breaks.setEnabled(False)
             self.StewartspinBox_class.setEnabled(False)
-            self.StewartComboBox_mask.setEnabled(False)
             self.StewarttextEdit_breaks.setVisible(False)
             self.StewartspinBox_class.setVisible(False)
-            self.StewartComboBox_mask.setVisible(False)
-            self.clean_mask_layer.setVisible(False)
             self.label_25.setVisible(False)
             self.label_38.setVisible(False)
-            self.label_3.setVisible(False)
 
     def on_change_layer(self, layer):
         self.StewartComboBox_field.setLayer(layer)
@@ -130,18 +122,17 @@ class SpatialPositionModelDialog(QDialog, FORM_CLASS):
 
     def run_stewart(self):
         pts_layer = self.StewartComboBox_pts.currentLayer()
-        mask_layer = self.StewartComboBox_mask.currentLayer() \
-            if self.radioButton_vector.isChecked() else None
+        mask_layer = self.StewartComboBox_mask.currentLayer()
         shape = None
         function = (self.StewartcomboBox_function.currentText()).lower()
-#        unknownpts_layer = self.StewartComboBox_unknwPts.currentLayer()
-#        matdist = self.StewartComboBox_matdist.currentLayer()
 
-        progressMessageBar = self.iface.messageBar().createMessage("Processing...")
+        progressMessageBar = self.iface.messageBar().createMessage(
+            "Processing...")
         progress = QProgressBar()
         progress.setMaximum(10)
         progressMessageBar.layout().addWidget(progress)
-        self.iface.messageBar().pushWidget(progressMessageBar, self.iface.messageBar().INFO)
+        self.iface.messageBar().pushWidget(
+            progressMessageBar, self.iface.messageBar().INFO)
 
         self.crs = pts_layer.dataProvider().crs()
         self.longlat = self.crs.geographicFlag()
@@ -193,7 +184,7 @@ class SpatialPositionModelDialog(QDialog, FORM_CLASS):
                     [f.geometry().asPoint() for f in pts_layer.getFeatures()])
                 pts_values = np.array([1 for i in xrange(len(pts_coords))])
             progress.setValue(2.5)
-            mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
+            mat_dist = make_dist_mat(pts_coords, unknownpts, self.longlat)
             progress.setValue(3.5)
             mat_dens = compute_interact_density(mat_dist, function, beta, span)
             progress.setValue(4.5)
@@ -215,7 +206,7 @@ class SpatialPositionModelDialog(QDialog, FORM_CLASS):
             pts_coords = np.array(pts_coords)
             pts_values1 = np.array(pts_values1)
             pts_values2 = np.array(pts_values2)
-            mat_dist = make_dist_mat(pts_coords, unknownpts, longlat=self.longlat)
+            mat_dist = make_dist_mat(pts_coords, unknownpts, self.longlat)
             progress.setValue(3)
             mat_dens = compute_interact_density(mat_dist, function, beta, span)
             progress.setValue(4)
