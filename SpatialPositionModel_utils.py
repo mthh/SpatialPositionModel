@@ -117,7 +117,6 @@ def gen_unknownpts(pts_layer, mask_layer, resolution, longlat):
         tmp = ((bounds[2] - bounds[0]) / 10 + (bounds[3] - bounds[1]) / 10) / 2
         bounds = (bounds[0] - tmp, bounds[1] - tmp,
                   bounds[2] + tmp, bounds[3] + tmp)
-
     return make_regular_points(bounds, resolution, longlat, offset)
 
 
@@ -145,16 +144,23 @@ def compute_potentials(matopport):
 
 def get_height_width(bounds, longlat):
     minlon, minlat, maxlon, maxlat = bounds
-
     if longlat:
-        height = hav_dist(
-                np.array([(maxlon + minlon) / 2, minlat]),
-                np.array([(maxlon + minlon) / 2, maxlat])
-                )
-        width = hav_dist(
-                np.array([minlon, (maxlat + minlat) / 2]),
-                np.array([maxlon, (maxlat + minlat) / 2])
-                )
+        dlat = maxlat - minlat
+        dlon = maxlon - minlon
+        if dlat > 180:
+            height = 6367 * dlat / 360
+        else:
+            height = hav_dist(
+                    np.array([(maxlon + minlon) / 2, minlat]),
+                    np.array([(maxlon + minlon) / 2, maxlat])
+                    )
+        if dlon > 90:
+            width = height = 6367 * dlon / 180
+        else:
+            width = hav_dist(
+                    np.array([minlon, (maxlat + minlat) / 2]),
+                    np.array([maxlon, (maxlat + minlat) / 2])
+                    )
     else:
         height = np.linalg.norm(
             np.array([(maxlon + minlon) / 2, minlat]) -
