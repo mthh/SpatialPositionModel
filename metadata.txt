@@ -14,7 +14,7 @@ version=0.1
 author=mthh
 email=matthieu.viry@cnrs.fr
 
-about=There are two main ways of modeling spatial interactions: the first one focuses on links between places (flows), the second one focuses on places and their influence at a distance. Following the physics metaphor, the flow may be seen as the gravitational force between two masses, the place influence as the gravitational potential. This plugin proposes an implementation of a place-based model: Stewart potentials model.
+about=There are two main ways of modeling spatial interactions: the first one focuses on links between places (flows), the second one focuses on places and their influence at a distance. Following the physics metaphor, the flow may be seen as the gravitational force between two masses, the place influence as the gravitational potential. This plugin proposes an implementation of a place-based model: Stewart potentials model. Requires python modules numpy, matplotlib, and shapely.
 
 tracker=https://github.com/mthh/SpatialPositionModel/issues
 repository=https://github.com/mthh/SpatialPositionModel/
