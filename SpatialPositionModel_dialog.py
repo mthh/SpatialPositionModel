@@ -7,7 +7,7 @@
                               -------------------
         begin                : 2017-05-15
         git sha              : $Format:%H$
-        copyright            : (C) 2015 by mthh
+        copyright            : (C) 2017 by mthh
         email                : matthieu.viry@cnrs.fr
  ***************************************************************************/
 

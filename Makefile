@@ -3,10 +3,10 @@
 #
 # Compute spatial interaction models
 #							 -------------------
-#		begin				: 2015-12-10
+#		begin				: 2017-05-15
 #		git sha				: $Format:%H$
-#		copyright			: (C) 2015 by #H
-#		email				: mth@#!.org
+#		copyright			: (C) 2017 by mthh
+#		email				: matthieu.viry@cnrs.fr
 # ***************************************************************************/
 #
 #/***************************************************************************
