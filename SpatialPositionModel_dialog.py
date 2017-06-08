@@ -34,10 +34,10 @@ from .SpatialPositionModel_utils import (
     )
 from matplotlib.pyplot import contourf
 import os.path
+from SpatialPositionModel_dialog_base_ui import Ui_SpatialPositionModel_dialog_base as FORM_CLASS
 
-
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'SpatialPositionModel_dialog_base.ui'))
+# FORM_CLASS, _ = uic.loadUiType(os.path.join(
+#     os.path.dirname(__file__), 'SpatialPositionModel_dialog_base2.ui'))
 
 
 class SpatialPositionModelDialog(QDialog, FORM_CLASS):

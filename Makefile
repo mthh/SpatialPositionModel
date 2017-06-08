@@ -48,7 +48,8 @@ PY_FILES = \
 	__init__.py \
 	SpatialPositionModel.py \
 	SpatialPositionModel_dialog.py \
-	SpatialPositionModel_utils.py
+	SpatialPositionModel_utils.py \
+	SpatialPositionModel_dialog_base_ui.py
 
 UI_FILES = \
 	SpatialPositionModel_dialog_base.ui
